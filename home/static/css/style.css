@@ -30,8 +30,9 @@
     margin-top: 45px;
     margin-left: 25px;
     margin-right: 20px;
-    overflow: hidden;
     background-color: white;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   .upload-file {
@@ -119,7 +120,7 @@
   }
 
  .bg-light{
-    background-image: url('img/backgroun_img.PNG');
+    background-image: url('../img/backgroun_img.PNG');
   }
 
  .upd_img{
@@ -202,6 +203,8 @@
 .row.entity-row,.entity-row-selected{
   margin-left: 35px;
   margin-top: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .entity-header{

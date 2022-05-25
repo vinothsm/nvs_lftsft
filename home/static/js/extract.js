@@ -1,7 +1,7 @@
-const dropArea = document.querySelector(".drag-area"),
-dragText = dropArea.querySelector("header")
-let file,
-available_entity_list=[],
+var dropArea = ''
+var dragText =''
+var file
+var available_entity_list=[],
 selected_entity_list=[];
 
 
@@ -32,8 +32,13 @@ $('body')
     }
     })
 .on("click","#submit_btn", function(e) {
-    alert('submit button is clicked')
-      })
+    if(file.length==0){
+        alert('no file is uploaded')
+    }
+    else{
+    display_preview_view()
+    }
+    })
 .on("click","#btn_all", function(e) {
     available_entity_list=['First Name','Last Name','Patient ID','Race','Drug Form',
 'Mobile Number','Drug Units','Drug Name','Age','Gender','Site ID','Weight','Drug Strength',
@@ -73,43 +78,10 @@ update_available_entites()
 
         update_selected_entites()
     }
-    })           
+    })    
     
-dropArea.addEventListener("dragover", (event)=>{
-event.preventDefault(); 
-dropArea.classList.add("active");
-let header_tag = `<header>Release to Upload File</header>`; 
-dropArea.innerHTML = header_tag; 
-// dragText.textContent = "Release to Upload File";
-});
-     
-dropArea.addEventListener("dragleave", ()=>{
-dropArea.classList.remove("active");
-    var files_length= document.getElementById('file').files.length,
-    display_text='<a id="upload_file" > Drag a Document/Click here to upload</a>'
-    if(files_length!=0){
-       display_text=file['name']
-    }
-let header_tag = `<header>${display_text}</header>`; 
-dropArea.innerHTML = header_tag; 
-});
-    
-dropArea.addEventListener("drop", (event)=>{
-event.preventDefault(); 
-    file = event.dataTransfer.files[0];
-    document.getElementById('file').files=event.dataTransfer.files
-showFile();
-});
-    
-function showFile(){
-    dropArea.classList.remove("active");
-    let header_tag = `<header>${file['name']}</header>`; 
-    dropArea.innerHTML = header_tag; 
-          console.log(dragText.textContent,file['name'])
-      }
-    
+  
 function update_available_entites(){
-
     dropArea.classList.remove("active");
     let header_tag = `<header><a id="upload_file" > Drag a Document/Click here to upload</a></header>`; 
     dropArea.innerHTML = header_tag; 
@@ -138,6 +110,7 @@ function update_available_entites(){
     update_html(html_content,'.row.entity-row')
     }
 
+
 function update_selected_entites(){
     let html_content=''
     _.forEach(selected_entity_list, function(sel_ent_val) {
@@ -155,8 +128,123 @@ function update_selected_entites(){
     update_html(html_content,'.entity-row-selected')
     }
 
-function update_html(html_content,container){
+
+function update_html(html_content,container,_url=''){
     $(container).html(html_content)
+    if(_url.includes('extraction')){
+        initalize_extract_view()
+    }
+    else if(_url.includes('review')){
+        preview()
+    }
 }
-$('#btn_all').addClass('active')
-$('#btn_all').click()
+
+
+function display_extract_view(){
+    $.ajax({
+        url:'/extraction',
+        method:'GET',
+        success: function(data){
+        update_html(data,'.bookingForm','/extraction')
+        }
+    });
+}
+
+
+function display_preview_view(){
+    $.ajax({
+        url:'/review',
+        method:'GET',
+        success: function(data){
+        update_html(data,'.bookingForm','/review')
+        }
+    });
+}
+
+
+function initalize_extract_view(){
+    dropArea=document.querySelector(".drag-area")
+    dragText = dropArea.querySelector("header")
+
+    dropArea.addEventListener("dragover", (event)=>{
+        event.preventDefault(); 
+        dropArea.classList.add("active");
+        let header_tag = `<header>Release to Upload File</header>`; 
+        dropArea.innerHTML = header_tag; 
+        // dragText.textContent = "Release to Upload File";
+        });
+             
+        dropArea.addEventListener("dragleave", ()=>{
+        dropArea.classList.remove("active");
+            var files_length= document.getElementById('file').files.length,
+            display_text='<a id="upload_file" > Drag a Document/Click here to upload</a>'
+            if(files_length!=0){
+               display_text=file['name']
+            }
+        let header_tag = `<header>${display_text}</header>`; 
+        dropArea.innerHTML = header_tag; 
+        });
+            
+        dropArea.addEventListener("drop", (event)=>{
+        event.preventDefault(); 
+            file = event.dataTransfer.files[0];
+            document.getElementById('file').files=event.dataTransfer.files
+        showFile();
+        });
+}
+
+
+function showFile(){
+    dropArea.classList.remove("active");
+    let header_tag = `<header>${file['name']}</header>`; 
+    dropArea.innerHTML = header_tag; 
+          console.log(dragText.textContent,file['name'])
+}
+
+
+function preview_pdf(){
+    src= URL.createObjectURL(file)
+    let html_content=`<embed  
+    src=${src}
+    class='pdf-preview-canvas'
+    >`
+    update_html(html_content,'.preview-container')
+    console.log('file',html_content)
+}
+
+
+function preview_selected_entites(){
+    let html_content=''
+    html_content=html_content
+    +`<div class="entity-block ">`
+    console.log('selected_entity_list',selected_entity_list)
+    _.forEach(selected_entity_list, function(sel_ent_val) {
+        let sel_e_val=sel_ent_val.replace(/[^a-zA-Z0-9]/g,'')
+        html_content=html_content
+        +`  <div class="column ">
+                <div class="card preview-ent" data-ent_val='${sel_ent_val}' data-regex_ent_val='${sel_e_val}'>
+                    <p class='entity-text-preview'>${sel_ent_val}</p>
+                    <p class='sub-text'>Sub-Heading</p>
+                    <p class='description-text'>some txt here</p>
+
+                </div>
+            </div>
+        `
+        });
+        html_content=html_content
+        +    `</div>
+        <div class='csv-block'>
+        <button class="btn csv_btn"><img src="../static/img/csv_img.PNG" class="csv_img"/></button>
+        <a href='#' id='csv_download_file'>Download File</a>
+        </div>
+        `
+    update_html(html_content,'.entity-container')
+}
+
+
+function preview(){
+    preview_selected_entites()
+    preview_pdf()
+}
+
+display_extract_view()
