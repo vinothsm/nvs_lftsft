@@ -1,0 +1,37 @@
+<div class="extract-entities-block" id="extract_entities_block">
+   <!--SECTION one -->
+    <div class="left rounded shadow-sm">
+        <button class="btn" id="upload_file"><img src="../static/img/upload_img.PNG" class="upd_img"/></button>
+
+      <div class='upload-file'>
+          <div class="drag-area">
+            <header><a id="upload_file" > Drag a Document/Click here to upload</a></header>
+          </div>
+          <div class="container buttons">
+            <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple hidden/>
+          <button id="extract_btn" class="btn" >Upload</button>
+        </div>
+        </div>
+    </div>   
+    <!--SECTION tabs -->
+    <div class="tabs-bar" data-toggle="buttons-radio">
+      <button name="tab-select" class="btn tab-btn" id="btn_all">All</button>
+      <button name="tab-select" class="btn tab-btn" id="btn_pll">Pll</button>
+      <button name="tab-select" class="btn tab-btn" id="btn_drug">Drug</button>
+      <button name="tab-select" class="btn tab-btn" id="btn_demographics">Demographics</button>
+    </div>
+    <!--SECTION TWO -->
+    <div class="right">
+      <div class="right-left-cont rounded shadow-sm">
+        <p class='entity-header'>Available Entities to Extract</p>
+        <div class="row entity-row"></div>
+      </div>
+      <div class="right-right-cont  rounded shadow-sm">  
+        <p class='entity-header-selected'>Entities Selected
+        </p>           
+        <div class="entity-row-selected"></div>
+      </div>
+    </div>
+    <button id="submit_btn" class="btn" > Submit</button>
+  <!-- </form> -->
+</div>

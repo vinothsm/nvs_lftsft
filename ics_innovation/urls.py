@@ -15,7 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from ics_innovation import views
+from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf.urls.static import static
+from django.conf import settings
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('', views.upload_file),
+    path('view_file/', views.get_file),
+    path("", views.home, name="home"),
+    path("extraction/", views.extraction_page, name="extraction_page"),
+    path("review/", views.review_page, name="review_page")
+
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
