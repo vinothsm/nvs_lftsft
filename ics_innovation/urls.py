@@ -25,12 +25,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', views.upload_file),
+    path('upload/', views.upload_file),
     path('view_file/', views.get_file),
-    path("", views.home, name="home"),
-    path("extraction/", views.extraction_page, name="extraction_page"),
-    path("review/", views.review_page, name="review_page")
+    path("", views.upload_page, name="home"),
+    path("review/", views.review_page, name="review_page"),
+    path("entity/", views.upload_entity_req)
 
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns = format_suffix_patterns(urlpatterns) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,6 +4,48 @@ var file;
 var available_entity_list = [],
   selected_entity_list = [];
 
+var entities_obj = {
+    "all": [
+        "First Name",
+        "Last Name",
+        "Patient ID",
+        "Race",
+        "Drug Form",
+        "Mobile Number",
+        "Drug Units",
+        "Drug Name",
+        "Age",
+        "Gender",
+        "Site ID",
+        "Weight",
+        "Drug Strength",
+        "Country",
+        "Etnicity",
+        "Address",
+        "BMI",
+    ],
+    "pll": [
+        "First Name",
+        "Last Name",
+        "Patient ID",
+        "Race",
+        "Mobile Number",
+        "Age",
+        "Gender",
+        "Country",
+        "Address",
+    ],
+    "drug": [
+        "Drug Form",
+        "Drug Units",
+        "Drug Name",
+        "Drug Strength",
+    ],
+    "demographic": [
+        "Site ID", "Weight", "Etnicity", "BMI"
+    ]
+}
+
 $("body")
   .on("click", '[name="tab-select"]', function (e) {
     e.stopPropagation();
@@ -37,52 +79,19 @@ $("body")
     }
   })
   .on("click", "#btn_all", function (e) {
-    available_entity_list = [
-      "First Name",
-      "Last Name",
-      "Patient ID",
-      "Race",
-      "Drug Form",
-      "Mobile Number",
-      "Drug Units",
-      "Drug Name",
-      "Age",
-      "Gender",
-      "Site ID",
-      "Weight",
-      "Drug Strength",
-      "Country",
-      "Etnicity",
-      "Address",
-      "BMI",
-    ];
+    available_entity_list = entities_obj["all"];
     update_available_entites();
   })
   .on("click", "#btn_pll", function (e) {
-    available_entity_list = [
-      "First Name",
-      "Last Name",
-      "Patient ID",
-      "Race",
-      "Mobile Number",
-      "Age",
-      "Gender",
-      "Country",
-      "Address",
-    ];
+    available_entity_list = entities_obj["pll"];
     update_available_entites();
   })
   .on("click", "#btn_drug", function (e) {
-    available_entity_list = [
-      "Drug Form",
-      "Drug Units",
-      "Drug Name",
-      "Drug Strength",
-    ];
+    available_entity_list = entities_obj["drug"];
     update_available_entites();
   })
   .on("click", "#btn_demographics", function (e) {
-    available_entity_list = ["Site ID", "Weight", "Etnicity", "BMI"];
+    available_entity_list =entities_obj["demographic"]
     update_available_entites();
   })
   .on("click", ".card.entity-card", function (e) {
@@ -109,10 +118,12 @@ $("body")
     }
   });
 
+
+// show categorized entities on the left side
 function update_available_entites() {
-  dropArea.classList.remove("active");
-  let header_tag = `<header><a id="upload_file" > Drag a Document/Click here to upload</a></header>`;
-  dropArea.innerHTML = header_tag;
+//   dropArea.classList.remove("active");
+//   let header_tag = `<header><a id="upload_file" > Drag a Document/Click here to upload</a></header>`;
+//   dropArea.innerHTML = header_tag;
   let html_content = "";
   _.forEach(available_entity_list, function (ent_val) {
     let e_val = ent_val.replace(/[^a-zA-Z0-9]/g, "");
@@ -134,6 +145,7 @@ function update_available_entites() {
   update_html(html_content, ".row.entity-row");
 }
 
+// show selected entites in the right side
 function update_selected_entites() {
   let html_content = "";
   _.forEach(selected_entity_list, function (sel_ent_val) {
@@ -152,6 +164,7 @@ function update_selected_entites() {
   update_html(html_content, ".entity-row-selected");
 }
 
+// dynamically appends html content in the container
 function update_html(html_content, container, _url = "") {
   $(container).html(html_content);
   if (_url.includes("extraction")) {
@@ -161,26 +174,9 @@ function update_html(html_content, container, _url = "") {
   }
 }
 
-function display_extract_view() {
-  $.ajax({
-    url: "/extraction",
-    method: "GET",
-    success: function (data) {
-      update_html(data, ".bookingForm", "/extraction");
-    },
-  });
-}
 
-function display_preview_view() {
-  $.ajax({
-    url: "/review",
-    method: "GET",
-    success: function (data) {
-      update_html(data, ".bookingForm", "/review");
-    },
-  });
-}
 
+// handle drag and upload file functionality
 function initalize_extract_view() {
   dropArea = document.querySelector(".drag-area");
   dragText = dropArea.querySelector("header");
@@ -213,55 +209,10 @@ function initalize_extract_view() {
   });
 }
 
+// to diaply selected file name
 function showFile() {
   dropArea.classList.remove("active");
   let header_tag = `<header>${file["name"]}</header>`;
   dropArea.innerHTML = header_tag;
   console.log(dragText.textContent, file["name"]);
 }
-
-function preview_pdf() {
-  src = URL.createObjectURL(file);
-  let html_content = `<embed  
-    src=${src}
-    class='pdf-preview-canvas'
-    >`;
-  update_html(html_content, ".preview-container");
-  console.log("file", html_content);
-}
-
-function preview_selected_entites() {
-  let html_content = "";
-  html_content = html_content + `<div class="entity-block ">`;
-  console.log("selected_entity_list", selected_entity_list);
-  _.forEach(selected_entity_list, function (sel_ent_val) {
-    let sel_e_val = sel_ent_val.replace(/[^a-zA-Z0-9]/g, "");
-    html_content =
-      html_content +
-      `  <div class="column ">
-                <div class="card preview-ent" data-ent_val='${sel_ent_val}' data-regex_ent_val='${sel_e_val}'>
-                    <p class='entity-text-preview'>${sel_ent_val}</p>
-                    <p class='sub-text'>Sub-Heading</p>
-                    <p class='description-text'>some txt here</p>
-
-                </div>
-            </div>
-        `;
-  });
-  html_content =
-    html_content +
-    `</div>
-        <div class='csv-block'>
-        <button class="btn csv_btn"><img src="../static/img/csv_img.PNG" class="csv_img"/></button>
-        <a href='#' id='csv_download_file'>Download File</a>
-        </div>
-        `;
-  update_html(html_content, ".entity-container");
-}
-
-function preview() {
-  preview_selected_entites();
-  preview_pdf();
-}
-
-display_extract_view();

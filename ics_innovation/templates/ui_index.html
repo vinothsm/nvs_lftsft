@@ -11,20 +11,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/review.css">
-
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/review.css' %}">
+    
 </head>
 <body class="bg-light">
   <nav class="navbar nav-scroller bg-body shadow-sm">
-      <img src="../static/img/novartis_logo.svg" alt="novartis" class="logo">
+      <img src="{% static 'img/novartis_logo.svg' %}" alt="novartis" class="logo">
       <header class="main-header">Entity Extraction</header>
-      <button class="btn" ><a href="#"><img src="../static/img/profile.png" class="logout_img"/></a></button>
+      <button class="btn" ><a href="#"><img src="{% static 'img/profile.png' %}" class="logout_img"/></a></button>
   </nav>
-  <div class="main_body">
-    <div class="container-fluid">
-      <div class="bookingForm">
-      </div>
+  <div class="container-fluid">
+    <div class="main_body">
+      {% block content %}
+      {% endblock %}
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -32,6 +33,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="../static/js/extract.js"></script>
+  <script src="{% static 'js/extract.js' %}"></script>
 </body>
 </html>

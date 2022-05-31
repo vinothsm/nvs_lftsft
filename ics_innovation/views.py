@@ -1,18 +1,12 @@
-from base64 import decode
-from email.headerregistry import ContentTypeHeader
-from urllib import response
-
-from django.http import HttpResponse, HttpResponseRedirect, FileResponse
-from .models import FileHandler
-from .serializers import FileHandlerSerializer
+from django.http import FileResponse
+from .models import FileHandler, EntityExtractor
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import render
 from .forms import UploadFileForm
 import os
-from django.utils.encoding import smart_str
-
+from .serializers import EntityExtractorSerializer
 
 @api_view(["GET", "POST"])
 def upload_file(request):
@@ -26,6 +20,18 @@ def upload_file(request):
             return Response(status=status.HTTP_201_CREATED)
     return render(request, "index.html", {"form": UploadFileForm})
 
+
+@api_view(["GET", "POST"])
+def upload_entity_req(request):
+    if request.method == "POST":
+        import pdb; pdb.set_trace()
+        return Response(status=status.HTTP_201_CREATED)
+    if request.method == "GET":
+        snippets = EntityExtractor.objects.all()
+        serializer = EntityExtractorSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+
 @api_view(["GET"])
 def get_file(request, id):
     one_obj = FileHandler.objects.filter(pk=id)
@@ -35,29 +41,18 @@ def get_file(request, id):
         return response
     return FileResponse(open(filename, "rb"), content_type="application/pdf")
 
-def home(request):
+def upload_page(request):
     context={}
-    # return render(request, 'Entity-extraction.html', context)
-    return render(request, 'ui_index.html', context)
-
-
-def extraction_page(request):
-    context={}
-    print(request)
-    return render(request, 'ui_entity_extraction.html', context)
-
+    return render(request, 'ui_upload.html', context=context)
+    # return render(request, 'ui_index.html', context=context)
 
 def review_page(request):
-    context={}
+    context={
+        "page": "preview",
+        "link": "files/test.pdf",
+        "response": [
+            {"entity": "name of the entity", "val": "extracted value"}
+        ]
+    }
     print(request)
-    return render(request, 'ui_review.html', context)
-
-
-@api_view(["GET"])
-def get_entities(request, id):
-    # load the file path
-    #     one_obj = FileHandler.objects.filter(pk=id)
-    # extract
-    # hit the analytics api
-    #return the response
-    pass
+    return render(request, 'ui_review.html', context=context)

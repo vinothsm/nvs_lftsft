@@ -9,7 +9,7 @@ class UploadFileForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(UploadFileForm, self).save(commit=False)
         instance.name = instance.media.file._get_name()
-        instance.filepath = "ics_innovation/uploads/"+instance.media.file._get_name()
+        instance.filepath = "static/files/"+instance.media.file._get_name()
         if commit:
             instance.save()
         return instance

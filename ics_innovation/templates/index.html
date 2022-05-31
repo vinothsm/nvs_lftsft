@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Upload file</h1>
-    <form enctype="multipart/form-data" method="post" action="/">
+    <form enctype="multipart/form-data" method="post" action="">
         {% csrf_token %}
         {{ form.as_p }}
     <input type="submit" value="Submit">
