@@ -24,7 +24,6 @@ def upload_file(request):
 @api_view(["GET", "POST"])
 def upload_entity_req(request):
     if request.method == "POST":
-        import pdb; pdb.set_trace()
         return Response(status=status.HTTP_201_CREATED)
     if request.method == "GET":
         snippets = EntityExtractor.objects.all()
@@ -41,10 +40,16 @@ def get_file(request, id):
         return response
     return FileResponse(open(filename, "rb"), content_type="application/pdf")
 
+@api_view(["GET", "POST"])
 def upload_page(request):
-    context={}
-    return render(request, 'ui_upload.html', context=context)
+    if request.method == "GET":
+        context={}
+        return render(request, 'ui_upload.html', context=context)
     # return render(request, 'ui_index.html', context=context)
+    if request.method == "POST":
+        context={}
+        return render(request, 'ui_upload.html', context=context)
+
 
 def review_page(request):
     context={
@@ -54,5 +59,4 @@ def review_page(request):
             {"entity": "name of the entity", "val": "extracted value"}
         ]
     }
-    print(request)
     return render(request, 'ui_review.html', context=context)

@@ -5,46 +5,39 @@ var available_entity_list = [],
   selected_entity_list = [];
 
 var entities_obj = {
-    "all": [
-        "First Name",
-        "Last Name",
-        "Patient ID",
-        "Race",
-        "Drug Form",
-        "Mobile Number",
-        "Drug Units",
-        "Drug Name",
-        "Age",
-        "Gender",
-        "Site ID",
-        "Weight",
-        "Drug Strength",
-        "Country",
-        "Etnicity",
-        "Address",
-        "BMI",
-    ],
-    "pll": [
-        "First Name",
-        "Last Name",
-        "Patient ID",
-        "Race",
-        "Mobile Number",
-        "Age",
-        "Gender",
-        "Country",
-        "Address",
-    ],
-    "drug": [
-        "Drug Form",
-        "Drug Units",
-        "Drug Name",
-        "Drug Strength",
-    ],
-    "demographic": [
-        "Site ID", "Weight", "Etnicity", "BMI"
-    ]
-}
+  all: [
+    "First Name",
+    "Last Name",
+    "Patient ID",
+    "Race",
+    "Drug Form",
+    "Mobile Number",
+    "Drug Units",
+    "Drug Name",
+    "Age",
+    "Gender",
+    "Site ID",
+    "Weight",
+    "Drug Strength",
+    "Country",
+    "Etnicity",
+    "Address",
+    "BMI",
+  ],
+  pll: [
+    "First Name",
+    "Last Name",
+    "Patient ID",
+    "Race",
+    "Mobile Number",
+    "Age",
+    "Gender",
+    "Country",
+    "Address",
+  ],
+  drug: ["Drug Form", "Drug Units", "Drug Name", "Drug Strength"],
+  demographic: ["Site ID", "Weight", "Etnicity", "BMI"],
+};
 
 $("body")
   .on("click", '[name="tab-select"]', function (e) {
@@ -53,7 +46,7 @@ $("body")
       $(this).toggleClass("active").siblings().not(this).removeClass("active");
     }
   })
-  .on("click", "#upload_file", function (e) {
+  .on("click", ".upload_file", function (e) {
     $("#file").trigger("click");
   })
   .on("input", "#file", function (e) {
@@ -63,21 +56,17 @@ $("body")
     dropArea.classList.add("active");
     showFile();
   })
-  .on("click", "#extract_btn", function (e) {
-    var files_length = document.getElementById("file").files.length;
-    if (files_length == 0) {
-      alert("no file is uploaded");
-    } else {
-      update_available_entites();
-    }
-  })
-  .on("click", "#submit_btn", function (e) {
-    if (file.length == 0) {
-      alert("no file is uploaded");
-    } else {
-      display_preview_view();
-    }
-  })
+
+  // .on("submit", "form", function (e) {
+  //   e.preventDefault()
+  //   if (file.length == 0) {
+  //     alert("no file is uploaded");
+  //   } else {
+  //     // display_preview_view();
+  //     debugger;
+  //     $(this).submit()
+  //   }
+  // })
   .on("click", "#btn_all", function (e) {
     available_entity_list = entities_obj["all"];
     update_available_entites();
@@ -91,7 +80,7 @@ $("body")
     update_available_entites();
   })
   .on("click", "#btn_demographics", function (e) {
-    available_entity_list =entities_obj["demographic"]
+    available_entity_list = entities_obj["demographic"];
     update_available_entites();
   })
   .on("click", ".card.entity-card", function (e) {
@@ -118,12 +107,11 @@ $("body")
     }
   });
 
-
 // show categorized entities on the left side
 function update_available_entites() {
-//   dropArea.classList.remove("active");
-//   let header_tag = `<header><a id="upload_file" > Drag a Document/Click here to upload</a></header>`;
-//   dropArea.innerHTML = header_tag;
+  //   dropArea.classList.remove("active");
+  //   let header_tag = `<header><a id="upload_file" > Drag a Document/Click here to upload</a></header>`;
+  //   dropArea.innerHTML = header_tag;
   let html_content = "";
   _.forEach(available_entity_list, function (ent_val) {
     let e_val = ent_val.replace(/[^a-zA-Z0-9]/g, "");
@@ -164,55 +152,52 @@ function update_selected_entites() {
   update_html(html_content, ".entity-row-selected");
 }
 
-// dynamically appends html content in the container
-function update_html(html_content, container, _url = "") {
-  $(container).html(html_content);
-  if (_url.includes("extraction")) {
-    initalize_extract_view();
-  } else if (_url.includes("review")) {
-    preview();
+// handle drag and upload file functionality
+function initalize_extract_view() {
+  //selecting all required elements
+  const dropArea = document.querySelector(".drag-area"),
+    dragText = dropArea.querySelector("header"),
+    button = dropArea.querySelector("button"),
+    input = dropArea.querySelector("input");
+  let file; //this is a global variable and we'll use it inside multiple functions
+  button.onclick = () => {
+    input.click(); //if user click on the button then the input also clicked
+  };
+  input.addEventListener("change", function () {
+    //getting user select file and [0] this means if user select multiple files then we'll select only the first one
+    file = this.files[0];
+    dropArea.classList.add("active");
+    showFile(); //calling function
+  });
+  //If user Drag File Over DropArea
+  dropArea.addEventListener("dragover", (event) => {
+    event.preventDefault(); //preventing from default behaviour
+    dropArea.classList.add("active");
+    dragText.textContent = "Release to Upload File";
+  });
+  //If user leave dragged File from DropArea
+  dropArea.addEventListener("dragleave", () => {
+    dropArea.classList.remove("active");
+    dragText.textContent = "Drag & Drop to Upload File";
+  });
+  //If user drop File on DropArea
+  dropArea.addEventListener("drop", (event) => {
+    event.preventDefault(); //preventing from default behaviour
+    //getting user select file and [0] this means if user select multiple files then we'll select only the first one
+    file = event.dataTransfer.files[0];
+    showFile(); //calling function
+  });
+
+  function showFile() {
+    let fileType = file.type; //getting selected file type
+    let validExtensions = ["application/pdf"]; //adding some valid image extensions in array
+    if (validExtensions.includes(fileType)) {
+      dragText.textContent = file["name"]
+    } else {
+      alert("This is not an Image File!");
+      dragText.textContent = "Drag & Drop to Upload File";
+    }
   }
 }
 
-
-
-// handle drag and upload file functionality
-function initalize_extract_view() {
-  dropArea = document.querySelector(".drag-area");
-  dragText = dropArea.querySelector("header");
-
-  dropArea.addEventListener("dragover", (event) => {
-    event.preventDefault();
-    dropArea.classList.add("active");
-    let header_tag = `<header>Release to Upload File</header>`;
-    dropArea.innerHTML = header_tag;
-    // dragText.textContent = "Release to Upload File";
-  });
-
-  dropArea.addEventListener("dragleave", () => {
-    dropArea.classList.remove("active");
-    var files_length = document.getElementById("file").files.length,
-      display_text =
-        '<a id="upload_file" > Drag a Document/Click here to upload</a>';
-    if (files_length != 0) {
-      display_text = file["name"];
-    }
-    let header_tag = `<header>${display_text}</header>`;
-    dropArea.innerHTML = header_tag;
-  });
-
-  dropArea.addEventListener("drop", (event) => {
-    event.preventDefault();
-    file = event.dataTransfer.files[0];
-    document.getElementById("file").files = event.dataTransfer.files;
-    showFile();
-  });
-}
-
-// to diaply selected file name
-function showFile() {
-  dropArea.classList.remove("active");
-  let header_tag = `<header>${file["name"]}</header>`;
-  dropArea.innerHTML = header_tag;
-  console.log(dragText.textContent, file["name"]);
-}
+initalize_extract_view()

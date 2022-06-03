@@ -1,41 +1,44 @@
-{% extends "ui_index.html" %}
-
-{% block content %}
+{% extends "ui_index.html" %} {% block content %}
 <div class="extract-entities-block" id="extract_entities_block">
-   <!--SECTION one -->
+  <!--SECTION one -->
+  <form enctype="multipart/form-data" method="post" action="">
+    {% csrf_token %}
     <div class="left rounded shadow-sm">
-        <button class="btn" id="upload_file"><img src="../static/img/upload_img.PNG" class="upd_img"/></button>
-
-      <div class='upload-file'>
-          <div class="drag-area">
-            <header><a id="upload_file" > Drag a Document/Click here to upload</a></header>
-          </div>
-          <div class="container buttons">
-            <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple hidden/>
-          <button id="extract_btn" class="btn" >Upload</button>
+      <div class="drag-area d-flex">
+        <div class="">
+          <button class="btn cursor-pointer"><img src="../static/img/upload_img.PNG" class="upd_img"/></button>
         </div>
+        <div class="">
+          <header>Drag & Drop to Upload File</header>
         </div>
-    </div>   
+        <div class="">
+          <button id="extract_btn" type="button">Upload</button>
+        </div>
+        <input type="file" hidden>
+      </div>
+    </div>
     <!--SECTION tabs -->
     <div class="tabs-bar" data-toggle="buttons-radio">
       <button name="tab-select" class="btn tab-btn" id="btn_all">All</button>
       <button name="tab-select" class="btn tab-btn" id="btn_pll">Pll</button>
       <button name="tab-select" class="btn tab-btn" id="btn_drug">Drug</button>
-      <button name="tab-select" class="btn tab-btn" id="btn_demographics">Demographics</button>
+      <button name="tab-select" class="btn tab-btn" id="btn_demographics">
+        Demographics
+      </button>
     </div>
     <!--SECTION TWO -->
     <div class="right">
       <div class="right-left-cont rounded shadow-sm">
-        <p class='entity-header'>Available Entities to Extract</p>
+        <p class="entity-header">Available Entities to Extract</p>
         <div class="row entity-row"></div>
       </div>
-      <div class="right-right-cont  rounded shadow-sm">  
-        <p class='entity-header-selected'>Entities Selected
-        </p>           
+      <div class="right-right-cont rounded shadow-sm">
+        <p class="entity-header-selected">Entities Selected</p>
         <div class="entity-row-selected"></div>
       </div>
     </div>
-    <button id="submit_btn" class="btn" > Submit</button>
-  <!-- </form> -->
+    <input id="submit_btn" type="submit" class="btn" val="Submit"/>
+    <!-- </form> -->
+  </form>
 </div>
 {% endblock %}
