@@ -4,16 +4,13 @@
   <form enctype="multipart/form-data" method="post" action="">
     {% csrf_token %}
     <div class="left rounded shadow-sm">
-      <div class="drag-area d-flex">
-        <div class="">
-          <button class="btn cursor-pointer"><img src="../static/img/upload_img.PNG" class="upd_img"/></button>
+      <button class="btn cursor-pointer"><img src="../static/img/upload_img.PNG" class="upd_img"/></button>
+
+      <div class='upload-file'>
+        <div class="drag-area">
+          <header>Drag a Document/Click here to upload</header>
         </div>
-        <div class="">
-          <header>Drag & Drop to Upload File</header>
-        </div>
-        <div class="">
           <button id="extract_btn" type="button">Upload</button>
-        </div>
         <input type="file" hidden>
       </div>
     </div>
