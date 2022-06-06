@@ -12,6 +12,7 @@ class EntityExtractor(models.Model):
     filepath = models.CharField(null=False, max_length=100)
     entities = models.CharField(null=False, max_length=1000)
     media = models.FileField(null=False, blank=True, upload_to="files")
+    extracted_text = models.TextField(null=True)
 
     def __str__(self) -> str:
         return super().__str__()
