@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import render
-from .forms import UploadFileForm
+from .forms import UploadFileForm, UploadTestForm, UploadEntityExtractor
 import os
 from .serializers import EntityExtractorSerializer
 
@@ -21,15 +21,31 @@ def upload_file(request):
     return render(request, "index.html", {"form": UploadFileForm})
 
 
-@api_view(["GET", "POST"])
+@api_view(["POST"])
 def upload_entity_req(request):
     if request.method == "POST":
-        return Response(status=status.HTTP_201_CREATED)
-    if request.method == "GET":
-        snippets = EntityExtractor.objects.all()
-        serializer = EntityExtractorSerializer(snippets, many=True)
-        return Response(serializer.data)
+        form = UploadEntityExtractor(request.POST, request.FILES)
+        if form.is_valid():
+            form = form.save()
+            form.save()
+            return Response(status=status.HTTP_201_CREATED)
+    
 
+
+@api_view(["GET"])
+def test_form(request):
+    return render(request, 'ui_form.html', context={"ids": [1,2,3,4,5]})
+
+@api_view(["POST"])
+def submit_form(request):
+    form = UploadTestForm(request.POST, request.FILES)
+    if form.is_valid():
+        form = form.save()
+        # form.data.name = request.FILES["media"]
+        # form.data.filepath = "ics_innovation/uploads/"+request.FILES["media"]._get_name()
+        form.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return render(request, 'ui_form.html', context={"val": "JP"})
 
 @api_view(["GET"])
 def get_file(request, id):

@@ -29,7 +29,10 @@ urlpatterns = [
     path('view_file/', views.get_file),
     path("", views.upload_page, name="home"),
     path("review/", views.review_page, name="review_page"),
-    path("entity/", views.upload_entity_req)
+    path("add_entity/", views.upload_entity_req),
+    path("form/", views.test_form),
+    path("add_value/", views.submit_form)
+
 
 ]
 

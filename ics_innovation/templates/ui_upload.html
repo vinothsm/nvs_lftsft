@@ -1,12 +1,12 @@
 {% extends "ui_index.html" %} {% block content %}
 <div class="extract-entities-block" id="extract_entities_block">
   <!--SECTION one -->
-  <form enctype="multipart/form-data" method="post" action="">
+  <form enctype="multipart/form-data" method="post" action="/add_entity/">
     {% csrf_token %}
     <div class="left rounded shadow-sm">
       <div class="drag-area d-flex">
         <div class="">
-          <button class="btn cursor-pointer"><img src="../static/img/upload_img.PNG" class="upd_img"/></button>
+          <button class="btn cursor-pointer" type="button"><img src="../static/img/upload_img.PNG" class="upd_img"/></button>
         </div>
         <div class="">
           <header>Drag & Drop to Upload File</header>
@@ -14,15 +14,15 @@
         <div class="">
           <button id="extract_btn" type="button">Upload</button>
         </div>
-        <input type="file" hidden>
+        <input type="file" name="media" hidden>
       </div>
     </div>
     <!--SECTION tabs -->
     <div class="tabs-bar" data-toggle="buttons-radio">
-      <button name="tab-select" class="btn tab-btn" id="btn_all">All</button>
-      <button name="tab-select" class="btn tab-btn" id="btn_pll">Pll</button>
-      <button name="tab-select" class="btn tab-btn" id="btn_drug">Drug</button>
-      <button name="tab-select" class="btn tab-btn" id="btn_demographics">
+      <button name="tab-select" type="button" class="btn tab-btn" id="btn_all">All</button>
+      <button name="tab-select" type="button" class="btn tab-btn" id="btn_pll">Pll</button>
+      <button name="tab-select" type="button" class="btn tab-btn" id="btn_drug">Drug</button>
+      <button name="tab-select" type="button" class="btn tab-btn" id="btn_demographics">
         Demographics
       </button>
     </div>

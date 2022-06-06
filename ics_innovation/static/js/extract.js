@@ -133,18 +133,29 @@ function update_available_entites() {
   update_html(html_content, ".row.entity-row");
 }
 
+function update_html(html_content,container,_url=''){
+  $(container).html(html_content)
+  // if(_url.includes('extraction')){
+  //     initalize_extract_view()
+  // }
+  // else if(_url.includes('review')){
+  //     preview()
+  // }
+}
+
 // show selected entites in the right side
 function update_selected_entites() {
   let html_content = "";
-  _.forEach(selected_entity_list, function (sel_ent_val) {
+  _.forEach(selected_entity_list, function (sel_ent_val, idx) {
     let sel_e_val = sel_ent_val.replace(/[^a-zA-Z0-9]/g, "");
     html_content =
       html_content +
       `<div class="column entity-column-selected">
             <div class="card entity-card-selected" data-ent_val='${sel_ent_val}' data-regex_ent_val='${sel_e_val}'>
-                <p class='entity-text'>${sel_ent_val}</p>
+                <input class="checkboxes" type="checkbox" name="entities" id="${idx}" checked>
+                <label for="${idx}">${sel_ent_val}</label>
             </div>
-            <button class="btn del_btn"  data-ent_val='${sel_ent_val}' data-regex_ent_val='${sel_e_val}'><img src="../static/img/delete_img.PNG" class="del_img"/></button>
+            <button class="btn del_btn" type="button"  data-ent_val='${sel_ent_val}' data-regex_ent_val='${sel_e_val}'><img src="../static/img/delete_img.PNG" class="del_img"/></button>
         </div>
         `;
   });
@@ -157,12 +168,14 @@ function initalize_extract_view() {
   //selecting all required elements
   const dropArea = document.querySelector(".drag-area"),
     dragText = dropArea.querySelector("header"),
-    button = dropArea.querySelector("button"),
+    buttons = dropArea.querySelectorAll("button"),
     input = dropArea.querySelector("input");
   let file; //this is a global variable and we'll use it inside multiple functions
-  button.onclick = () => {
-    input.click(); //if user click on the button then the input also clicked
-  };
+  buttons.forEach((button) => {
+    button.onclick = () => {
+      input.click(); //if user click on the button then the input also clicked
+    };
+  })
   input.addEventListener("change", function () {
     //getting user select file and [0] this means if user select multiple files then we'll select only the first one
     file = this.files[0];
@@ -194,10 +207,16 @@ function initalize_extract_view() {
     if (validExtensions.includes(fileType)) {
       dragText.textContent = file["name"]
     } else {
-      alert("This is not an Image File!");
+      alert("This is not a PDF File!");
       dragText.textContent = "Drag & Drop to Upload File";
     }
   }
 }
 
-initalize_extract_view()
+
+$(() => {
+
+  initalize_extract_view()
+  $("#btn_all").trigger("click")
+  $("#btn_all").addClass("active")
+})

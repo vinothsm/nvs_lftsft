@@ -214,6 +214,19 @@ p {
   height: 45px;
 }
 
+.entity-card-selected .checkboxes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0px;
+  width: 0px;
+  background-color: #eee;
+}
+
+.entity-card-selected label {
+  margin: 1 1;
+}
+
 .card.entity-card.selected {
   background-color: #fffded;
   border: 1px solid #e0e2ec;

@@ -1,11 +1,16 @@
+from pyexpat import model
 from django.db import models
 
 
+class TestForm(models.Model):
+    id = models.AutoField(primary_key=True)
+    email = models.EmailField(null=False)
+    media = models.FileField(null=False, blank=True, upload_to="files")
+
 class EntityExtractor(models.Model):
     id = models.AutoField(primary_key=True)
-    filename = models.CharField(null=False, max_length=100)
+    filepath = models.CharField(null=False, max_length=100)
     entities = models.CharField(null=False, max_length=1000)
-    extracted_text = models.JSONField(null=True)
     media = models.FileField(null=False, blank=True, upload_to="files")
 
     def __str__(self) -> str:
