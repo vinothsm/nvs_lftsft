@@ -7,7 +7,7 @@
       <div class="doc-review rounded shadow-sm">
         <div class="preview-container">
           <embed  
-        src="{% static link %}"
+        src="{% static staticpath %}"
         class='pdf-preview-canvas'
     >
         </div>
@@ -31,5 +31,10 @@
         </div>
       </div>
     </div>
+</div>
+<div>
+  <p>
+    {{ extracted_text }}
+  </p>
 </div>
 {% endblock %}

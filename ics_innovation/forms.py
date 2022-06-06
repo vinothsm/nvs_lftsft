@@ -1,5 +1,5 @@
 from django import forms
-from .models import FileHandler, TestForm, EntityExtractor
+from .models import FileHandler, TestForm, EntityExtractorV1
 from .extractor import get_text_from_file
 import os
 from pathlib import Path
@@ -34,15 +34,15 @@ class UploadTestForm(forms.ModelForm):
 
 class UploadEntityExtractor(forms.ModelForm):
     class Meta:
-        model = EntityExtractor
+        model = EntityExtractorV1
         fields = ["media", "entities"]
 
     def save(self, commit=True):
         instance = super(UploadEntityExtractor, self).save(commit=False)
         # instance.name = instance.media.file._get_name()
-        instance.filepath = "static/files/"+instance.media.file._get_name()
         instance.filepath = os.path.join(Path(__file__).parent, "static/files/"+instance.media.file._get_name())
-        instance.extracted_text = get_text_from_file(instance.filepath)
+        instance.staticpath = "files/"+instance.media.file._get_name()
         if commit:
             instance.save()
+            instance.extracted_text = get_text_from_file(instance.filepath)
         return instance

@@ -21,6 +21,10 @@ MEDIA_URL = "files/"
 NODE_MODULES_ROOT = '/node_modules'
 NODE_PACKAGE_JSON = str(BASE_DIR) + '/package.json'
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 15  # 15M
+FILE_UPLOAD_MAX_MEMORY_SIZE = DATA_UPLOAD_MAX_MEMORY_SIZE
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
