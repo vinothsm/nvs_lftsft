@@ -1,6 +1,6 @@
 from django import forms
 from .models import EntityExtractorV1
-from .extractor import get_text_from_file
+from .extractor import get_fulltext_from_pdf
 import os
 from pathlib import Path
 
@@ -16,5 +16,5 @@ class UploadEntityExtractor(forms.ModelForm):
         instance.staticpath = "files/"+instance.media.file._get_name()
         if commit:
             instance.save()
-            instance.extracted_text = get_text_from_file(instance.filepath)
+            instance.extracted_text = get_fulltext_from_pdf(instance.filepath)
         return instance
