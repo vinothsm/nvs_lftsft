@@ -1,4 +1,0 @@
-python-docx
-fasttext
-pymupdf
-docx2txt

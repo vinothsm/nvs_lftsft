@@ -18,7 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = os.path.join('ics_innovation/static/')
 MEDIA_URL = "files/"
 
-NODE_MODULES_ROOT = '/node_modules'
+NODE_PACKAGE_MANAGER_EXECUTABLE = "/opt/homebrew/bin/npm"
+NODE_MODULES_ROOT = str(BASE_DIR) +'/node_modules'
 NODE_PACKAGE_JSON = str(BASE_DIR) + '/package.json'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 15  # 15M
@@ -47,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'django_node_assets'
 ]
 
 MIDDLEWARE = [
@@ -129,11 +131,12 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = "static/"
 
-# STATICFILES_FINDERS = [
-#     'django.contrib.staticfiles.finders.FileSystemFinder',
-#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#     'django_node_assets.finders.NodeModulesFinder',
-# ]
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django_node_assets.finders.NodeModulesFinder',
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
