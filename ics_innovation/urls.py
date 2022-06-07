@@ -25,15 +25,9 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload/', views.upload_file),
-    path('view_file/', views.get_file),
     path("", views.upload_page, name="home"),
     path("review/", views.review_page, name="review_page"),
-    path("add_entity/", views.upload_entity_req),
-    path("form/", views.test_form),
-    path("add_value/", views.submit_form)
-
-
+    path("add_entity/", views.upload_entity_req)
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
