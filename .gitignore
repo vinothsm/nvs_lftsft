@@ -5,3 +5,8 @@ __pycache__/
 **/migrations/
 
 *.pdf
+node_modules/
+package-lock.json
+.DS_Store
+
+*.txt

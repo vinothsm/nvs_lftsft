@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import FileHandler
+from .models import EntityExtractorV1
 
-admin.site.register(FileHandler)
+admin.site.register(EntityExtractorV1)

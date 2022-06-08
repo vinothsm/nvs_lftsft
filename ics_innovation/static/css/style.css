@@ -224,9 +224,6 @@ p {
   background-color: #eee;
 }
 
-.entity-card-selected label {
-  margin: 1 1;
-}
 
 .card.entity-card.selected {
   background-color: #fffded;
@@ -303,20 +300,22 @@ p {
   margin-left: 10px;
 }
 
-#extract_btn,
-#submit_btn {
-  width: 215px;
-}
-.entity-header-selected {
-  margin-left: 20px;
-  margin-top: 18px;
-}
-
 #extract_btn{
   position: absolute;
   right: 60px;
 }
 
+#extract_btn,
+#submit_btn {
+  width: 215px;
+}
+
+.entity-header-selected {
+  margin-left: 20px;
+  margin-top: 18px;
+}
+
 .card.entity-card-selected label{
   margin-top: 0.5rem;
+  text-align: center;
 }
