@@ -23,8 +23,8 @@
             {% for item in response %}
             <div class="card preview-ent">
               <p class='entity-text-preview'>{{ item.entity }}</p>
-              <p class='sub-text'>{{ item.val }}</p>
-              <p class='description-text'>some txt here</p>
+              <p class='sub-text'>{{ item.expected_values[0]["value"] }}</p>
+              <!-- <p class='description-text'>some txt here</p> -->
             </div>
             {% endfor %}
           </div>
