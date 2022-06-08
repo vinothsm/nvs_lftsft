@@ -8,6 +8,8 @@ from .forms import UploadEntityExtractor
 @api_view(["POST"])
 def upload_entity_req(request):
     if request.method == "POST":
+        request.POST._mutable=True
+        request.POST.update({"entities": ",".join(request.POST.getlist("entities"))})
         form = UploadEntityExtractor(request.POST, request.FILES)
         if form.is_valid():
             form = form.save()
