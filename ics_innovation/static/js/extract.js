@@ -5,38 +5,9 @@ var available_entity_list = [],
   selected_entity_list = [];
 
 var entities_obj = {
-  all: [
-    "First Name",
-    "Last Name",
-    "Patient ID",
-    "Race",
-    "Drug Form",
-    "Mobile Number",
-    "Drug Units",
-    "Drug Name",
-    "Age",
-    "Gender",
-    "Site ID",
-    "Weight",
-    "Drug Strength",
-    "Country",
-    "Etnicity",
-    "Address",
-    "BMI",
-  ],
-  pll: [
-    "First Name",
-    "Last Name",
-    "Patient ID",
-    "Race",
-    "Mobile Number",
-    "Age",
-    "Gender",
-    "Country",
-    "Address",
-  ],
-  drug: ["Drug Form", "Drug Units", "Drug Name", "Drug Strength"],
-  demographic: ["Site ID", "Weight", "Etnicity", "BMI"],
+  all: ["STRENGTH", "DRUG", "FORM", "BRAND", 'SUBJID', 'AGE', 'BMI', 'CIRCUMSTANCES', 'DATE', 'RACE', 'COUNTRY', 'DRINKING HABITS', 'EMAIL', 'ETHNICITY', 'GENDER', 'HEIGHT', 'MEDICAL HISTORY', 'NON PARTICIPANT', 'PHONE', 'SITEID', 'SMOKING HABITS', 'STUDY DAY', 'WEIGHT'],
+  pre: ['SUBJID', 'AGE', 'BMI', 'CIRCUMSTANCES', 'DATE', 'RACE', 'COUNTRY', 'DRINKING HABITS', 'EMAIL', 'ETHNICITY', 'GENDER', 'HEIGHT', 'MEDICAL HISTORY', 'NON PARTICIPANT', 'PHONE', 'SITEID', 'SMOKING HABITS', 'STUDY DAY', 'WEIGHT'],
+  dre: ["STRENGTH", "DRUG", "FORM", "BRAND"]
 };
 
 $("body")
@@ -71,16 +42,12 @@ $("body")
     available_entity_list = entities_obj["all"];
     update_available_entites();
   })
-  .on("click", "#btn_pll", function (e) {
-    available_entity_list = entities_obj["pll"];
+  .on("click", "#btn_dre", function (e) {
+    available_entity_list = entities_obj["dre"];
     update_available_entites();
   })
-  .on("click", "#btn_drug", function (e) {
-    available_entity_list = entities_obj["drug"];
-    update_available_entites();
-  })
-  .on("click", "#btn_demographics", function (e) {
-    available_entity_list = entities_obj["demographic"];
+  .on("click", "#btn_pre", function (e) {
+    available_entity_list = entities_obj["pre"];
     update_available_entites();
   })
   .on("click", ".card.entity-card", function (e) {
