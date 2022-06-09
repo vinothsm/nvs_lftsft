@@ -9,13 +9,12 @@
   /* width: 480px; */
 }
 .doc-review.rounded{
-   
-  width: 480px;
+  /* width: 480px; */
   margin-right: 20px;
   margin-left: 51px;
 }
 .entity-review.rounded{
-    width: 764px;
+    /* width: 764px; */
     overflow-y: scroll;
     overflow-x: hidden;
 }

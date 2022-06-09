@@ -2,9 +2,9 @@
 {% load static %}
 {% block content %}
 <div class="preview-block" id="preview_block">
-    <div class="main-container">
+    <div class="main-container col-11">
       <!--SECTION one -->
-      <div class="doc-review rounded shadow-sm">
+      <div class="doc-review rounded shadow-sm col-5">
         <div class="preview-container">
           <embed  
         src="{% static staticpath %}"
@@ -13,28 +13,25 @@
         </div>
       </div>    
     <!--SECTION TWO -->
-      <div class="entity-review rounded shadow-sm">
+      <div class="entity-review rounded shadow-sm col-7">
         <div class='csv-block'>
           <button class="btn csv_btn"><img src="{% static 'img/csv_img.PNG' %}" class="csv_img"/></button>
           <a href='#' id='csv_download_file'>Download File</a>
         </div>
+        <div class="loader d-flex justify-content-center align-items-center h-75">          
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
         <div class="entity-container">
           <div class="entity-block">
-            {% for item in response %}
-            <div class="card preview-ent">
-              <p class='entity-text-preview'>{{ item.entity }}</p>
-              <p class='sub-text'>{{ item.expected_values.0.value }}</p>
-              <!-- <p class='description-text'>some txt here</p> -->
-            </div>
-            {% endfor %}
           </div>
         </div>
       </div>
     </div>
 </div>
-<div>
-  <p>
-    {{ extracted_text }}
-  </p>
-</div>
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'underscore/underscore-min.js' %}"></script>
+<script src="{% static 'js/review.js' %}"></script>
 {% endblock %}

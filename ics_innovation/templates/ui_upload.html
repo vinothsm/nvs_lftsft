@@ -1,7 +1,7 @@
 {% extends "ui_index.html" %} {% block content %}
 <div class="extract-entities-block" id="extract_entities_block">
   <!--SECTION one -->
-  <form enctype="multipart/form-data" method="post" action="/add_entity/">
+  <form enctype="multipart/form-data" method="post" action="/">
     {% csrf_token %}
     <div class="left rounded shadow-sm">
       <div class="drag-area d-flex">
@@ -38,4 +38,8 @@
     <!-- </form> -->
   </form>
 </div>
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'underscore/underscore-min.js' %}"></script>
+<script src="{% static 'js/extract.js' %}"></script>
 {% endblock %}
