@@ -119,7 +119,7 @@ function update_selected_entites() {
       html_content +
       `<div class="column entity-column-selected">
             <div class="card entity-card-selected" data-ent_val='${sel_ent_val}' data-regex_ent_val='${sel_e_val}'>
-                <input class="checkboxes" type="checkbox" name="entities" id="${idx}" checked>
+                <input class="checkboxes" type="checkbox" value='${sel_ent_val}' name="entities" id="${idx}" checked>
                 <label for="${idx}">${sel_ent_val}</label>
             </div>
             <button class="btn del_btn" type="button"  data-ent_val='${sel_ent_val}' data-regex_ent_val='${sel_e_val}'><img src="../static/img/delete_img.PNG" class="del_img"/></button>
