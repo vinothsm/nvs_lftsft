@@ -25,7 +25,7 @@
   margin-left: 39.5px;
   background-color: #F8F9FF;
   border: #E8EAF2 solid 1px;
-
+  box-shadow: 0 0 60px 0 rgb(0 0 0 / 4%);
 }
 
 .pdf-preview-canvas{
@@ -36,23 +36,30 @@
   
 }
 .entity-container{
-  margin-top: 26.5px;
+  margin-top: -100px;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
 }
 .csv_btn{
-  margin-left: 30%;
+  margin-left: 37%;
   margin-bottom: auto;
 }
 .csv-block{
-  margin-left: 25%;
+  margin-left: 20%;
   margin-bottom: auto;
+  margin-top: 100px;
+
 }
 #csv_download_file{
-  margin-left: 4px;
-  margin-left: 37px;
-
+  margin-left: 233px;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: #0066BA;
+  color: #0066BA;
+  position: fixed;
+  margin-top: -15px;
 }
 
 .sub-text ,.description-text,.entity-text-preview{
@@ -62,8 +69,21 @@
 }
 
 .sub-text {
-  font-size: 10px;
+  font-size: 20px;
+  font-weight: 500 !important;
+  height: 2em;
+  line-height: 1em;
+  font-size: 20px;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
+.sub-text:hover{
+  overflow: visible; 
+  white-space: normal;
+  height:auto;  
 }
 .description-text{
   font-size: 9px;
@@ -71,6 +91,13 @@
 }
 
 .entity-text-preview{
-  font-size: 14px;
+  font-size: 13px;
+  margin-top: 10px;
+  font-weight: 900 !important;
+}
 
+.csv_img{
+  margin-top: -73px;
+  position: fixed;
+  margin-left: 265px;
 }
