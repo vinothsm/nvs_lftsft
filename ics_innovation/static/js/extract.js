@@ -92,7 +92,7 @@ function update_available_entites() {
       html_content +
       `
          data-ent_val='${ent_val}' data-regex_ent_val='${e_val}'>
-          <p class='entity-text'>${ent_val}</p>
+          <p class='entity-text'>${toTitleCase(ent_val)}</p>
         </div>
       </div>`;
   });
@@ -120,7 +120,7 @@ function update_selected_entites() {
       `<div class="column entity-column-selected">
             <div class="card entity-card-selected" data-ent_val='${sel_ent_val}' data-regex_ent_val='${sel_e_val}'>
                 <input class="checkboxes" type="checkbox" value='${sel_ent_val}' name="entities" id="${idx}" checked>
-                <label for="${idx}">${sel_ent_val}</label>
+                <label for="${idx}">${toTitleCase(sel_ent_val)}</label>
             </div>
             <button class="btn del_btn" type="button"  data-ent_val='${sel_ent_val}' data-regex_ent_val='${sel_e_val}'><img src="../static/img/delete_img.PNG" class="del_img"/></button>
         </div>
@@ -180,6 +180,12 @@ function initalize_extract_view() {
   }
 }
 
+
+function toTitleCase(str) {
+  return str.toLowerCase().split(' ').map(function (word) {
+    return (word.charAt(0).toUpperCase() + word.slice(1));
+  }).join(' ');
+}
 
 $(() => {
 

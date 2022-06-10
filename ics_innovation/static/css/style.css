@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'titillium-web.regular', sans-serif;
 }
 
 body {
@@ -11,9 +11,12 @@ body {
 }
 
 .main-header {
-  font-size: larger;
   margin-right: 67%;
-  font-weight: bolder;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 31px;
+  text-align: center;
 }
 
 .drag-area {
@@ -33,7 +36,8 @@ body {
 
 .right {
   margin-top: 25px;
-  height: 260px;
+  /* height: 260px; */
+  /* height: calc(100% - 100px); */
 }
 
 /* .drag-area.active{
@@ -97,10 +101,10 @@ p {
 }
 
 .logo {
-  width: 160px;
-  height: 35px;
+  height: 27.57px;
+  width: 151px;
   margin-top: -4px;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .left.rounded,
@@ -141,7 +145,8 @@ p {
 }
 
 .right-left-cont {
-  margin-right: 20px;
+  margin-right: 40px;
+
 }
 .nav-tabs {
   background-color: rgba(255, 255, 255, 0);
@@ -153,22 +158,22 @@ p {
 }
 
 .btn.tab-btn {
-  width: 150px;
+  min-width: 150px;
   border: 2px solid #103963;
   background-color: white;
   color: #103963;
   border-radius: 22px;
   margin-left: 8px;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 24px;
+  text-align: left;
 }
 
 .btn.tab-btn.active {
-  width: 150px;
   background-color: #103963;
   color: white;
-  border-radius: 22px;
-  margin-left: 8px;
-  font-size: 18px;
 }
 
 .btn:focus {
@@ -177,7 +182,7 @@ p {
 }
 
 .right-left-cont {
-  width: 77%;
+  width: 75%;
 }
 
 .right-right-cont {
@@ -190,16 +195,20 @@ p {
   margin-right: 20px;
 }
 
+.row.entity-row{
+
+  padding: 0px 35px 35px 20px;
+
+}
+
 .row.entity-row,
 .entity-row-selected {
-  margin-left: 35px;
-  margin-top: 10px;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 .entity-header {
-  margin-left: 47px;
+  margin-left: 20px;
   margin-top: 18px;
 }
 
@@ -232,12 +241,17 @@ p {
 
 .entity-text,
 .entity-text-selected {
-  font-size: 14px;
-  font-weight: 500;
+
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  color: #333333;
+  font-family: 'titillium-web.regular';
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 21px;
   text-align: center;
 }
 
@@ -257,6 +271,7 @@ p {
   margin-top: 8px;
   color: white;
   width: 170px;
+  text-align: center;
 }
 
 ::-webkit-scrollbar {
@@ -318,3 +333,5 @@ p {
   margin-top: 0.5rem;
   text-align: center;
 }
+
+
