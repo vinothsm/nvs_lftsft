@@ -20,9 +20,6 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from django.conf.urls.static import static
 from django.conf import settings
 
-
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.upload_page, name="home"),
