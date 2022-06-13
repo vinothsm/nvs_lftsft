@@ -7,7 +7,7 @@ from .forms import UploadEntityExtractor
 from .models import EntityExtractorV1
 import requests as req
 
-env = "dev"
+env = "vdi"
 
 @api_view(["GET"])
 def get_extracted_data(request):
@@ -27,6 +27,15 @@ def get_extracted_data(request):
                 ]
             }
         ]
+    if env == "vdi":
+        latest_doc = EntityExtractorV1.objects.order_by("-pk")[0]
+        url = "http://10.185.56.168:8051/entities"
+        resp = req.post(url, json={
+            "input_text": latest_doc.extracted_text,
+            "entity_types": latest_doc.entities
+        })
+        json = resp.json()
+
     if env == "prod":
         latest_doc = EntityExtractorV1.objects.order_by("-pk")[0]
         url = "http://localhost:8051/entities"
