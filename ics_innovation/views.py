@@ -32,7 +32,7 @@ def get_extracted_data(request):
         url = "http://localhost:8051/entities"
         resp = req.post(url, json={
             "input_text": latest_doc.extracted_text,
-            "entities": latest_doc.entities
+            "entity_types": latest_doc.entities
         })
         json = resp.json()
 
