@@ -7,7 +7,7 @@ from .forms import UploadEntityExtractor
 from .models import EntityExtractorV1
 import requests as req
 
-env = "vdi"
+env = "prod"
 
 @api_view(["GET"])
 def get_extracted_data(request):
