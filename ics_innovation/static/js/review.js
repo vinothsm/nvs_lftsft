@@ -13,7 +13,7 @@ function render_extracted_entities(){
             html += '<div class="card preview-ent">'
             html += "<p class='entity-text-preview'>"+element.entity+"</p>"
             var text_str = _.map(element.expected_values, "value").join(",")
-            html += "<p class='sub-text'>"+text_str+"</p>"        
+            html += "<p class='sub-text' title='"+text_str+"'>"+text_str+"</p>"        
             html += "</div>"
 
             element.expected_values.forEach((item) => {
