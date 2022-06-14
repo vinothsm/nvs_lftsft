@@ -17,6 +17,7 @@ body {
   letter-spacing: 0;
   line-height: 31px;
   text-align: center;
+  cursor: pointer;
 }
 
 .drag-area {
@@ -337,4 +338,7 @@ p {
   text-align: center;
 }
 
-
+.main-header a,.main-header a:hover{
+  color: black;
+  text-decoration: none;
+}
