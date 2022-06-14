@@ -80,11 +80,11 @@
   white-space: nowrap;
 }
 
-.sub-text:hover{
+/* .sub-text:hover{
   overflow: visible; 
   white-space: normal;
   height:auto;  
-}
+} */
 .description-text{
   font-size: 9px;
 

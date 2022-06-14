@@ -12,8 +12,9 @@ class UploadEntityExtractor(forms.ModelForm):
     def save(self, commit=True):
         instance = super(UploadEntityExtractor, self).save(commit=False)
         # instance.name = instance.media.file._get_name()
-        instance.filepath = os.path.join(Path(__file__).parent, "static/files/"+instance.media.file._get_name())
-        instance.staticpath = "files/"+instance.media.file._get_name()
+        # import pdb; pdb.set_trace()
+        instance.filepath = os.path.join(Path(__file__).parent, "static/files/"+instance.media.file._get_name().replace(" ", "_"))
+        instance.staticpath = "files/"+instance.media.file._get_name().replace(" ", "_")
         if commit:
             instance.save()
             instance.extracted_text = get_fulltext_from_pdf(instance.filepath)
