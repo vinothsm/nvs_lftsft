@@ -342,3 +342,18 @@ p {
   color: black;
   text-decoration: none;
 }
+
+.modal-body{
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.modal-content{
+  width: 65%;
+}
+
+.modal-header{
+  border-bottom: 0px solid #dee2e6;
+  padding: 0rem 0.5rem;
+}

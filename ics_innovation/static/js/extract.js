@@ -53,9 +53,14 @@ $("body")
   .on("click", ".card.entity-card", function (e) {
     let selected_ent_val = this.attributes["data-ent_val"]["value"];
     if (!selected_entity_list.includes(selected_ent_val)) {
-      selected_entity_list.push(selected_ent_val);
-      update_selected_entites();
-      $(this).addClass("selected");
+      if(selected_entity_list.length<5){
+        selected_entity_list.push(selected_ent_val);
+        update_selected_entites();
+        $(this).addClass("selected");
+    }
+      else{
+          $('#alert_limit').modal('show')
+      }
     }
   })
   .on("click", ".btn.del_btn", function (e) {
