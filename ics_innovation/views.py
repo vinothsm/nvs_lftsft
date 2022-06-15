@@ -7,7 +7,7 @@ from .forms import UploadEntityExtractor
 from .models import EntityExtractorV1
 import requests as req
 
-env = "vdi"
+env = "dev"
 
 @api_view(["GET"])
 def get_extracted_data(request):
@@ -25,6 +25,10 @@ def get_extracted_data(request):
                     {'end_pos': 221, 'start_pos': 216,
                     'type': 'WEIGHT', 'value': '23 kg'}
                 ]
+            },
+            {
+                "entity": "SUBJID",
+                "expected_values": []
             }
         ]
     if env == "vdi":
@@ -78,6 +82,10 @@ def upload_page(request):
                         {'end_pos': 221, 'start_pos': 216,
                          'type': 'WEIGHT', 'value': '23 kg'}
                     ]
+                },
+                {
+                    "entity": "SUBJID",
+                    "expected_values": []
                 }
             ]
             context = {

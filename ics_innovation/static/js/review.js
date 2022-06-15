@@ -13,8 +13,6 @@ function render_extracted_entities(){
             html += '<div class="card preview-ent">'
             html += "<p class='entity-text-preview'>"+element.entity+"</p>"
             var text_str = _.map(element.expected_values, "value").join(",")
-            html += "<p class='sub-text' title='"+text_str+"'>"+text_str+"</p>"        
-            html += "</div>"
 
             element.expected_values.forEach((item) => {
                 processed_data.push({
@@ -22,6 +20,17 @@ function render_extracted_entities(){
                     "value": item.value
                 })
             })
+
+            if(element.expected_values && element.expected_values.length == 0){
+                text_str = "Not found"
+                processed_data.push({
+                    "entity": element.entity,
+                    "value": "Not found"
+                })
+            }
+
+            html += "<p class='sub-text' title='"+text_str+"'>"+text_str+"</p>"        
+            html += "</div>"
         });
         const csvString = [
             [
