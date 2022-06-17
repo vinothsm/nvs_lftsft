@@ -27,17 +27,22 @@ $("body")
     dropArea.classList.add("active");
     showFile();
   })
-
-  // .on("submit", "form", function (e) {
-  //   e.preventDefault()
-  //   if (file.length == 0) {
-  //     alert("no file is uploaded");
-  //   } else {
-  //     // display_preview_view();
-  //     debugger;
-  //     $(this).submit()
-  //   }
-  // })
+  .on("click", "#submit_btn", function (e) {
+    var text_msg=''
+    let file_val=$('input[name=media]').val()
+    if(file_val==''){
+      text_msg='Please select any File'
+    }
+    else if(selected_entity_list.length==0){
+      text_msg='Please select any Entity'
+    }
+    else{
+      $('.validation-checkbox').prop('checked',true)
+    }
+    if(text_msg !=''){ 
+      $('#alert_limit').modal('show')
+      $('.modal-body').text(text_msg)}
+  })
   .on("click", "#btn_all", function (e) {
     available_entity_list = entities_obj["all"];
     update_available_entites();
@@ -60,6 +65,7 @@ $("body")
     }
       else{
           $('#alert_limit').modal('show')
+          $('.modal-body').text('You can only select 5 Entities')
       }
     }
   })

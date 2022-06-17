@@ -16,7 +16,7 @@
         <div class="">
           <button id="extract_btn" type="button">Upload</button>
         </div>
-        <input type="file" name="media" hidden>
+        <input type="file" name="media" hidden required>
       </div>
     </div>
     <!--SECTION tabs -->
@@ -33,7 +33,9 @@
       </div>
       <div class="right-right-cont rounded shadow-sm">
         <p class="entity-header-selected">Entities Selected</p>
-        <div class="entity-row-selected"></div>
+        <div class="entity-row-selected">
+          <input type="checkbox" class="validation-checkbox" required hidden>
+        </div>
       </div>
     </div>
     <input id="submit_btn" type="submit" class="btn" val="Submit"/>
