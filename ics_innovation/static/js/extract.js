@@ -34,7 +34,7 @@ $("body")
       text_msg='Please select any File'
     }
     else if(selected_entity_list.length==0){
-      text_msg='Please select any Entity'
+      text_msg='Atleast one Entity should be selected'
     }
     else{
       $('.validation-checkbox').prop('checked',true)
