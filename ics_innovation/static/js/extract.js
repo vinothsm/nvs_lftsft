@@ -175,7 +175,7 @@ function initalize_extract_view() {
 
   function showFile() {
     let fileType = file.type; //getting selected file type
-    let validExtensions = ["application/pdf"]; //adding some valid image extensions in array
+    let validExtensions = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]; //adding some valid image extensions in array
     if (validExtensions.includes(fileType)) {
       dragText.textContent = file["name"]
     } else {
