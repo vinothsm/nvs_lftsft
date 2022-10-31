@@ -11,7 +11,7 @@ body {
 }
 
 .main-header {
-  margin-right: 73.5%;
+  margin-right: 66.5%;
   font-size: 20px;
   font-weight: bold;
   letter-spacing: 0;
@@ -126,11 +126,10 @@ p {
 }
 
 #extract_btn,
-#submit_btn {
+#Anonymization_btn,#Redaction_btn {
   background: #096ab4;
   color: white;
   margin-top: 28px;
-  width: 178px;
   height: 50px;
   border-radius: 23px;
   font-size: 22px;
@@ -257,7 +256,7 @@ p {
   text-align: center;
 }
 
-#submit_btn {
+#Anonymization_btn,#Redaction_btn  {
   float: right;
   margin-right: 25px;
 }
@@ -309,7 +308,7 @@ p {
 }
 
 #extract_btn:focus,
-#submit_btn:focus {
+#Anonymization_btn:focus,#Redaction_btn:focus  {
   outline: 2px solid darkblue;
   box-shadow: 2px solid darkblue;
 }
@@ -324,7 +323,7 @@ p {
 }
 
 #extract_btn,
-#submit_btn {
+#Anonymization_btn,#Redaction_btn  {
   width: 215px;
 }
 

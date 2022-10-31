@@ -1,7 +1,7 @@
 .main-container{
     display: flex;
 }
-.doc-review.rounded, .entity-review.rounded{
+.original-pdf,.anonymized-pdf, .entity-review.rounded,.pdf-list{
     border-radius: 1.25rem!important;
     /* height: 430px; */
     height:calc(100vh - 146px);
@@ -9,10 +9,11 @@
     margin-top: 51px;
   /* width: 480px; */
 }
-.doc-review.rounded{
+.original-pdf.rounded{
   /* width: 480px; */
-  margin-right: 20px;
-  margin-left: 51px;
+  /* margin-right: 20px;
+  margin-left: 51px; */
+  /* padding: 4px; */
 }
 .entity-review.rounded{
     /* width: 764px; */

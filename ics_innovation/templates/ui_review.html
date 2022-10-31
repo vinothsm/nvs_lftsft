@@ -4,7 +4,11 @@
 <div class="preview-block" id="preview_block">
     <div class="main-container col-11">
       <!--SECTION one -->
-      <div class="doc-review rounded shadow-sm col-5">
+      <div class="pdf-list rounded shadow-sm col-3">
+        <div class="preview-container">
+        </div>
+      </div>
+      <div class="doc-review rounded shadow-sm original-pdf col-5 ml-3">
         <div class="preview-container">
           <embed  
         src="{% static staticpath %}"
@@ -13,7 +17,7 @@
         </div>
       </div>    
     <!--SECTION TWO -->
-      <div class="entity-review rounded shadow-sm col-7">
+      <!-- <div class="entity-review rounded shadow-sm col-7">
         <div class='csv-block'>
           <button class="btn csv_btn"><img src="{% static 'img/csv_img.PNG' %}" class="csv_img"/></button>
           <a href='#' id='csv_download_file'>Download File</a>
@@ -26,6 +30,13 @@
         <div class="entity-container">
           <div class="entity-block">
           </div>
+        </div>
+      </div> -->
+      <div class="doc-review rounded shadow-sm anonymized-pdf col-5 ml-3">
+        <div class="preview-container">
+            <embed  
+          src="{% static staticpath %}"
+          class='pdf-preview-canvas'>
         </div>
       </div>
     </div>
