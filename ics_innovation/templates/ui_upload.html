@@ -16,7 +16,7 @@
         <div class="">
           <button id="extract_btn" type="button">Upload</button>
         </div>
-        <input type="file" name="media" hidden>
+        <input type="file" name="media" hidden multiple required >
       </div>
     </div>
     <!--SECTION tabs -->
@@ -36,7 +36,9 @@
         <div class="entity-row-selected"></div>
       </div>
     </div>
-    <button id="Anonymization_btn" type="button" class="btn" >Anonymize </button>
+    <input type="text" name="operation" hidden required id="operation_type" >
+    <button id="submit_entity_form" type="submit" hidden >submit</button>
+    <button id="Anonymization_btn" type="button" class="btn" >Anonymize</button>
     <button id="Redaction_btn" type="button" class="btn" >Redact </button>
 
     <!-- </form> -->

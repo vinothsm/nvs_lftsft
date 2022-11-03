@@ -2,41 +2,41 @@
 {% load static %}
 {% block content %}
 <div class="preview-block" id="preview_block">
-    <div class="main-container col-11">
+    <div class="main-container col-11 d-flex">
       <!--SECTION one -->
       <div class="pdf-list rounded shadow-sm col-3">
         <div class="preview-container">
+            <div class="filename-container">
+                <div class="files-block">
+                  {% for item in file_details %}
+                  {% if forloop.counter == 1 %}
+                  <div class="card preview-ent selected" data-slected-class="{{ item.filename }}" data-filename="{{item.filename}}" data-original-path="{{item.original}}" data-updated-path="{{item.updated}}">
+                  {% else %}
+                  <div class="card preview-ent" data-slected-class="{{ item.filename }}" data-filename="{{item.filename}}" data-original-path="{{item.original}}" data-updated-path="{{item.updated}}">
+                  {% endif %}
+                    <p class='entity-text-preview'>{{ item.filename }}</p>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
         </div>
-      </div>
       <div class="doc-review rounded shadow-sm original-pdf col-5 ml-3">
         <div class="preview-container">
-          <embed  
-        src="{% static staticpath %}"
-        class='pdf-preview-canvas'
-    >
+          {% if file_details %}
+            <iframe  
+            src="{% static file_details.0.original %}"
+            class='pdf-preview-canvas original-pdf-file_' id="original-pdf-file"></iframe>
+        {% endif %}
         </div>
       </div>    
-    <!--SECTION TWO -->
-      <!-- <div class="entity-review rounded shadow-sm col-7">
-        <div class='csv-block'>
-          <button class="btn csv_btn"><img src="{% static 'img/csv_img.PNG' %}" class="csv_img"/></button>
-          <a href='#' id='csv_download_file'>Download File</a>
-        </div>
-        <div class="loader d-flex justify-content-center align-items-center h-75">          
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-        <div class="entity-container">
-          <div class="entity-block">
-          </div>
-        </div>
-      </div> -->
       <div class="doc-review rounded shadow-sm anonymized-pdf col-5 ml-3">
         <div class="preview-container">
-            <embed  
-          src="{% static staticpath %}"
-          class='pdf-preview-canvas'>
+            {% if file_details %}
+                <iframe
+                src="{% static file_details.0.updated %}"
+                class='pdf-preview-canvas updated-pdf-file_' id="updated-pdf-file"></iframe>
+            {% endif %}
         </div>
       </div>
     </div>

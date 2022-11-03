@@ -2,7 +2,8 @@ var dropArea = "";
 var dragText = "";
 var file;
 var available_entity_list = [],
-  selected_entity_list = [];
+selected_entity_list = []
+fileList={};
 
 var entities_obj = {
   all: ["STRENGTH", "DRUG", "FORM", "BRAND", 'SUBJID', 'AGE', 'BMI', 'CIRCUMSTANCES', 'DATE', 'RACE', 'COUNTRY', 'DRINKING HABITS', 'EMAIL', 'ETHNICITY', 'GENDER', 'HEIGHT', 'MEDICAL HISTORY', 'NON PARTICIPANT', 'PHONE', 'SITEID', 'SMOKING HABITS', 'STUDY DAY', 'WEIGHT', "NAME", "ADDRESS"],
@@ -21,23 +22,12 @@ $("body")
     $("#file").trigger("click");
   })
   .on("input", "#file", function (e) {
-    var fileList = this.files;
+    fileList = this.files;
+    file=fileList[0]
     console.log(fileList);
-    file = fileList[0];
     dropArea.classList.add("active");
     showFile();
   })
-
-  // .on("submit", "form", function (e) {
-  //   e.preventDefault()
-  //   if (file.length == 0) {
-  //     alert("no file is uploaded");
-  //   } else {
-  //     // display_preview_view();
-  //     debugger;
-  //     $(this).submit()
-  //   }
-  // })
   .on("click", "#btn_all", function (e) {
     available_entity_list = entities_obj["all"];
     update_available_entites();
@@ -77,6 +67,14 @@ $("body")
 
       update_selected_entites();
     }
+  })
+  .on("click", "#Redaction_btn", function (e) {
+    $('#operation_type').val('Redaction')
+    $("#submit_entity_form").trigger("click");
+  })
+  .on("click", "#Anonymization_btn", function (e) {
+    $('#operation_type').val('Anonymization')
+    $("#submit_entity_form").trigger("click");
   });
 
 // show categorized entities on the left side
@@ -150,7 +148,8 @@ function initalize_extract_view() {
   })
   input.addEventListener("change", function () {
     //getting user select file and [0] this means if user select multiple files then we'll select only the first one
-    file = this.files[0];
+    fileList = this.files;
+    file=fileList[0]
     dropArea.classList.add("active");
     showFile(); //calling function
   });
@@ -169,15 +168,16 @@ function initalize_extract_view() {
   dropArea.addEventListener("drop", (event) => {
     event.preventDefault(); //preventing from default behaviour
     //getting user select file and [0] this means if user select multiple files then we'll select only the first one
-    file = event.dataTransfer.files[0];
+    fileList = event.dataTransfer.files;
     showFile(); //calling function
   });
 
   function showFile() {
-    let fileType = file.type; //getting selected file type
-    let validExtensions = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]; //adding some valid image extensions in array
-    if (validExtensions.includes(fileType)) {
-      dragText.textContent = file["name"]
+    var is_filetype_acceptable=check_file_type()
+    if(is_filetype_acceptable){
+      let file_name=fileList.length
+        let header_tag = `<header class="file-name-header">${file_name} document(s) uploded</header>`; 
+        dragText.innerHTML = header_tag;
     } else {
       alert("This is not a PDF File!");
       dragText.textContent = "Drag & Drop to Upload File";
@@ -198,3 +198,16 @@ $(() => {
   $("#btn_all").trigger("click")
   $("#btn_all").addClass("active")
 })
+
+function check_file_type(){
+  let validExtensions = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]; //adding some valid image extensions in array
+  for (let item in fileList) {
+    if(item!='length' && item!="item"){
+      let fileType = fileList[item].type; //getting selected file type
+    if ( !validExtensions.includes(fileType)  ) {
+      return false
+    }
+  }
+  }
+  return true
+}
