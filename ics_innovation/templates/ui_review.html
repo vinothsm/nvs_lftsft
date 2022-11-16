@@ -1,6 +1,11 @@
 {% extends "ui_index.html" %}
 {% load static %}
 {% block content %}
+<div class="d-flex move-page">
+  <button class="btn" id="page-scroll-up"><img class="move-left" src="{% static 'img/arrow-left-short.svg' %}" alt="prev" ></button>
+  <p class="page-no-text">Page 1</p>
+  <button class="btn" id="page-scroll-down"><img class="move-right" src="{% static 'img/arrow-right-short.svg' %}" alt="next" ></button>
+</div>
 <div class="preview-block" id="preview_block">
     <div class="main-container col-11 d-flex">
       <!--SECTION one -->
@@ -10,39 +15,39 @@
                 <div class="files-block">
                   {% for item in file_details %}
                   {% if forloop.counter == 1 %}
-                  <div class="card preview-ent selected" data-slected-class="{{ item.filename }}" data-filename="{{item.filename}}" data-original-path="{{item.original}}" data-updated-path="{{item.updated}}">
+                  <div class="card preview-ent selected" data-slected-class="{{ item.filename }}" data-filename="{{item.filename}}" data-original-path="{{item.original}}" data-updated-path="{{item.updated}}" title="{{item.filename}}">
                   {% else %}
-                  <div class="card preview-ent" data-slected-class="{{ item.filename }}" data-filename="{{item.filename}}" data-original-path="{{item.original}}" data-updated-path="{{item.updated}}">
+                  <div class="card preview-ent" data-slected-class="{{ item.filename }}" data-filename="{{item.filename}}" data-original-path="{{item.original}}" data-updated-path="{{item.updated}}" title="{{item.filename}}">
                   {% endif %}
                     <p class='entity-text-preview'>{{ item.filename }}</p>
                   </div>
                   {% endfor %}
                 </div>
+                <button class="btn download-pdf"><a href="{{ download_files }}" class="dwld-href">Download All Files</a></button>
               </div>
             </div>
         </div>
       <div class="doc-review rounded shadow-sm original-pdf col-5 ml-3">
-        <div class="preview-container">
-          {% if file_details %}
-            <iframe  
-            src="{% static file_details.0.original %}"
-            class='pdf-preview-canvas original-pdf-file_' id="original-pdf-file"></iframe>
-        {% endif %}
+        <p class="pdf-header">Original</p>
+        <div class=" overflow-auto  pdf-container preview-container" id="original-container" >
+          <div class="pdfViewer" id="org-pdf-file" tabindex="1" data-zoomlevel="100"></div>
         </div>
       </div>    
       <div class="doc-review rounded shadow-sm anonymized-pdf col-5 ml-3">
-        <div class="preview-container">
-            {% if file_details %}
-                <iframe
-                src="{% static file_details.0.updated %}"
-                class='pdf-preview-canvas updated-pdf-file_' id="updated-pdf-file"></iframe>
-            {% endif %}
+        <p class="pdf-header">{{ operation }}</p>
+        <div class="overflow-auto pdf-container preview-container" id="anonymized-container">
+          <div class="pdfViewer" id="upd-pdf-file" tabindex="1" data-zoomlevel="100"></div>
         </div>
+      </div>
       </div>
     </div>
 </div>
 <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'underscore/underscore-min.js' %}"></script>
+<script src="{% static 'js/pdf-annotate.js' %}"></script>
+<script src="{% static 'pdfjs-dist/build/pdf.js' %}"></script>
+<script src="{% static 'pdfjs-dist/web/pdf_viewer.js' %}"></script>
+<script src="{% static 'js/pdfEngine.js' %}"></script>
 <script src="{% static 'js/review.js' %}"></script>
 {% endblock %}
