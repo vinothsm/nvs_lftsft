@@ -50,6 +50,8 @@ $("body")
     }
       else{
           $('#alert_limit').modal('show')
+          $('.alert-popup-body').text("You can only select 5 Entities");
+
       }
     }
   })
@@ -64,17 +66,22 @@ $("body")
       $(
         `.card.entity-card.selected[data-regex_ent_val='${e_val}']`
       ).removeClass("selected");
-
       update_selected_entites();
     }
   })
   .on("click", "#Redaction_btn", function (e) {
     $('#operation_type').val('Redaction')
-    $("#submit_entity_form").trigger("click");
+    var is_valid=is_input_valid()
+    if(is_valid){
+      $("#submit_entity_form").trigger("click");
+    }
   })
   .on("click", "#Anonymization_btn", function (e) {
     $('#operation_type').val('Anonymization')
-    $("#submit_entity_form").trigger("click");
+    var is_valid=is_input_valid()
+    if(is_valid){
+      $("#submit_entity_form").trigger("click");
+    }
   });
 
 // show categorized entities on the left side
@@ -174,13 +181,23 @@ function initalize_extract_view() {
 
   function showFile() {
     var is_filetype_acceptable=check_file_type()
-    if(is_filetype_acceptable){
-      let file_name=fileList.length
-        let header_tag = `<header class="file-name-header">${file_name} document(s) uploded</header>`; 
-        dragText.innerHTML = header_tag;
-    } else {
-      alert("This is not a PDF File!");
-      dragText.textContent = "Drag & Drop to Upload File";
+    if (fileList.length >5 ) {
+      $('#alert_limit').modal('show');
+      $('.alert-popup-body').text("You can only select 5 Files");
+      fileList=[];
+      $('form :input[name=media]').val('');
+    }
+     else {
+      if(is_filetype_acceptable){
+        let file_name=fileList.length
+          let header_tag = `<header class="file-name-header">${file_name} document(s) uploded</header>`; 
+          dragText.innerHTML = header_tag;
+      }
+      else{    
+      $('#alert_limit').modal('show');
+        $('.alert-popup-body').text("This is not a PDF File!");
+        dragText.textContent = "Drag & Drop to Upload File";
+      }
     }
   }
 }
@@ -208,6 +225,20 @@ function check_file_type(){
       return false
     }
   }
+  }
+  return true
+}
+
+function is_input_valid(){
+  if(fileList.length == undefined || fileList.length == 0){
+    $('#alert_limit').modal('show');
+    $('.alert-popup-body').text("Please select atleast 1 file");
+    return false
+  }
+  if(selected_entity_list.length == 0){
+    $('#alert_limit').modal('show');
+    $('.alert-popup-body').text("Please select atleast 1 Entity");
+    return false
   }
   return true
 }
