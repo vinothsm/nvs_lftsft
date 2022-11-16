@@ -5,7 +5,8 @@
     border-radius: 1.25rem!important;
     height:calc(100vh - 146px);
     background-color: white;
-    margin-top: 51px;
+    /* margin-top: 51px; */
+    margin-top: 5px;
 }
 
 .filename-container{
@@ -62,6 +63,10 @@
   font-size: 13px;
   margin-top: 18px;
   font-weight: 900 !important;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .card.preview-ent.selected{
@@ -69,3 +74,59 @@
   border: 1px solid #1175BE;
   
   }
+
+.pdf-container::-webkit-scrollbar:vertical {
+  height: 1.2rem;
+  background-color: transparent;
+}
+
+.pdf-container::-webkit-scrollbar:horizontal {
+  height: 0.5rem;
+  background-color: transparent;
+}
+
+.preview-container{
+  height: calc(100vh - 200px);
+ }
+
+ .move-left,.move-right{
+  height: 40px;
+  width: 50px;
+ }
+
+ .move-page{
+  float: right;
+  margin-top: 10px;
+ }
+
+ .page-no-text{
+  margin-top: 13px;
+ }
+
+ .download-pdf{
+  background: #096ab4;
+  color: white;
+  width: -webkit-fill-available;
+ }
+
+ .dwld-href{
+  color: white;
+  text-decoration: none;
+  background-color: transparent;
+ }
+
+ .dwld-href:hover{
+  color:  #bebebe;
+  text-decoration: none;
+
+ }
+
+ .files-block{
+  height: calc(100vh - 217px);
+ }
+
+ .pdf-header{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+ }
