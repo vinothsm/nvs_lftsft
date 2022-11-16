@@ -6,6 +6,8 @@ from django.shortcuts import render
 from .forms import UploadDocuments
 from .models import EntityExtractorV1
 import requests as req
+import os, shutil
+from pathlib import Path
 
 env = "dev"
 
@@ -64,10 +66,17 @@ def upload_page(request):
         return render(request, 'ui_upload.html', context=context)
     if request.method == "POST":
         EntityExtractorV1.objects.all().delete()
+        files_path = os.path.join(Path(__file__).parent, "static/files")
+        zip_files_path = os.path.join(Path(__file__).parent, "static/all_files")
+        if  os.path.exists(files_path):
+            shutil.rmtree(files_path)
+        if  os.path.exists(zip_files_path):
+            shutil.rmtree(zip_files_path)
         request.POST._mutable = True
         request.POST.update(
             {"entities": ",".join(request.POST.getlist("entities"))})
         files_=request.FILES.getlist('media')
+        operation = request.POST.getlist('operation')[0]
         context={"page": "preview","response": ''}
         file_details=[]
         for  file in files_:
@@ -83,6 +92,14 @@ def upload_page(request):
                 })
         context['file_details'] = file_details
         print(context)
+        if not os.path.exists(files_path):
+            os.makedirs(files_path)
+        if not os.path.exists(zip_files_path):
+            os.makedirs(zip_files_path)
+        make_archive(files_path,zip_files_path+'/'+operation+'.zip')
+        context['download_files']='static/all_files/'+operation+'.zip'
+        context['operation']=operation
+
         return render(request, 'ui_review.html', context=context)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -94,3 +111,13 @@ def review_page(request):
         "staticpath": latest_doc.staticpath
     }
     return render(request, 'ui_review.html', context=context)
+
+
+def make_archive(source, destination):
+        base = os.path.basename(destination)
+        name = base.split('.')[0]
+        format = base.split('.')[1]
+        archive_from = os.path.dirname(source)
+        archive_to = os.path.basename(source.strip(os.sep))
+        shutil.make_archive(name, format, archive_from, archive_to)
+        shutil.move('%s.%s'%(name,format), destination)
