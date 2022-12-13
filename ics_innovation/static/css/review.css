@@ -130,3 +130,8 @@
   margin-bottom: 0.5rem;
   margin-left: 0.5rem;
  }
+
+ .process-section{
+  background-color: white;
+  border-radius: 1.25rem !important;
+ }

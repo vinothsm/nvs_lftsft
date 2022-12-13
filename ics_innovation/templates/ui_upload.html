@@ -36,13 +36,18 @@
         <div class="entity-row-selected"></div>
       </div>
     </div>
-    <input type="text" name="operation" hidden required id="operation_type" >
+    <input type="text" name="action" hidden required id="action_type" >
     <button id="submit_entity_form" type="submit" hidden >submit</button>
     <button id="Anonymization_btn" type="button" class="btn" >Anonymize</button>
     <button id="Redaction_btn" type="button" class="btn" >Redact </button>
+    <button id="preview_prev_btn" type="button" class="btn" ><a href="/review" class="preview-previous-files">Preview Previous Documents</a> </button>
 
     <!-- </form> -->
   </form>
+</div>
+
+<div class="rounded shadow-sm col-11 mt-5 p-5 ml-5 process-section d-none">
+  <p class="text-center file-status-text">Files are processing</p>
 </div>
 
 <div class="modal fade" id="alert_limit" tabindex="-1" role="dialog" aria-labelledby="alert_limitLabel" aria-hidden="true">

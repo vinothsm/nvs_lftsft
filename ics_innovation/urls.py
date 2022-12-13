@@ -23,9 +23,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.upload_page, name="home"),
-    path("review/", views.review_page, name="review_page"),
-    path("extracted_data/", views.get_extracted_data, name="review_page"),
-    path("extracted_text/", views.get_extracted_text, name="review_page")
+    path("review/", views.review_page, name="review_page")
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

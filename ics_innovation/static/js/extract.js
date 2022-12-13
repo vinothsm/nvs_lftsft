@@ -70,16 +70,20 @@ $("body")
     }
   })
   .on("click", "#Redaction_btn", function (e) {
-    $('#operation_type').val('Redaction')
+    $('#action_type').val('Redaction')
     var is_valid=is_input_valid()
     if(is_valid){
+      $('.extract-entities-block').addClass('d-none')
+      $('.process-section').removeClass('d-none')
       $("#submit_entity_form").trigger("click");
     }
   })
   .on("click", "#Anonymization_btn", function (e) {
-    $('#operation_type').val('Anonymization')
+    $('#action_type').val('Anonymization')
     var is_valid=is_input_valid()
     if(is_valid){
+      $('.extract-entities-block').addClass('d-none')
+      $('.process-section').removeClass('d-none')
       $("#submit_entity_form").trigger("click");
     }
   });

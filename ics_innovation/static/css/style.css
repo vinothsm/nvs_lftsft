@@ -126,7 +126,7 @@ p {
 }
 
 #extract_btn,
-#Anonymization_btn,#Redaction_btn {
+#Anonymization_btn,#Redaction_btn ,#preview_prev_btn{
   background: #096ab4;
   color: white;
   margin-top: 28px;
@@ -256,7 +256,7 @@ p {
   text-align: center;
 }
 
-#Anonymization_btn,#Redaction_btn  {
+#Anonymization_btn,#Redaction_btn ,#preview_prev_btn {
   float: right;
   margin-right: 25px;
 }
@@ -308,7 +308,7 @@ p {
 }
 
 #extract_btn:focus,
-#Anonymization_btn:focus,#Redaction_btn:focus  {
+#Anonymization_btn:focus,#Redaction_btn:focus ,#preview_prev_btn:focus {
   outline: 2px solid darkblue;
   box-shadow: 2px solid darkblue;
 }
@@ -323,8 +323,8 @@ p {
 }
 
 #extract_btn,
-#Anonymization_btn,#Redaction_btn  {
-  width: 215px;
+#Anonymization_btn,#Redaction_btn  ,#preview_prev_btn{
+  min-width: 215px;
 }
 
 .entity-header-selected {
@@ -355,4 +355,9 @@ p {
 .modal-header{
   border-bottom: 0px solid #dee2e6;
   padding: 0rem 0.5rem;
+}
+
+.preview-previous-files,.preview-previous-files:hover{
+  text-decoration: none;
+  color: white;
 }

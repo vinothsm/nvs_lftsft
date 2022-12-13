@@ -34,7 +34,7 @@
         </div>
       </div>    
       <div class="doc-review rounded shadow-sm anonymized-pdf col-5 ml-3">
-        <p class="pdf-header">{{ operation }}</p>
+        <p class="pdf-header">{{ action }}</p>
         <div class="overflow-auto pdf-container preview-container" id="anonymized-container">
           <div class="pdfViewer" id="upd-pdf-file" tabindex="1" data-zoomlevel="100"></div>
         </div>
@@ -46,8 +46,10 @@
 <script src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'underscore/underscore-min.js' %}"></script>
 <script src="{% static 'js/pdf-annotate.js' %}"></script>
-<script src="{% static 'pdfjs-dist/build/pdf.js' %}"></script>
-<script src="{% static 'pdfjs-dist/web/pdf_viewer.js' %}"></script>
+<!-- <script src="{% static 'pdfjs-dist/build/pdf.js' %}"></script>
+<script src="{% static 'pdfjs-dist/web/pdf_viewer.js' %}"></script> -->
+<script src="{% static 'js/pdf.js' %}"></script>
+<script src="{% static 'js/pdf_viewer.js' %}"></script>
 <script src="{% static 'js/pdfEngine.js' %}"></script>
 <script src="{% static 'js/review.js' %}"></script>
 {% endblock %}

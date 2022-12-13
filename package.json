@@ -19,6 +19,7 @@
   "dependencies": {
     "bootstrap": "^4.6.1",
     "jquery": "^3.5.1",
+    "pdfjs-dist": "^3.0.279",
     "underscore": "^1.13.4"
   }
 }

@@ -1,4 +1,4 @@
-from django.http import FileResponse
+from django.http import FileResponse,JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,56 +8,10 @@ from .models import EntityExtractorV1
 import requests as req
 import os, shutil
 from pathlib import Path
-
+import pandas as pd
+import zipfile
+import json
 env = "dev"
-
-@api_view(["GET"])
-def get_extracted_data(request):
-    json = []
-    if env == "dev":
-        json = [
-            {
-                'entity': 'BRAND',
-                'expected_values': [
-                    {'end_pos': 513, 'start_pos': 503, 'type': 'BRAND', 'value': 'Ioana Nita'}, {'end_pos': 594, 'start_pos': 574, 'type': 'BRAND', 'value': 'Grigore Alexandrescu'}]}, {'entity': 'FORM', 'expected_values': [{'end_pos': 68, 'start_pos': 62, 'type': 'FORM', 'value': 'Tablet'}, {'end_pos': 106, 'start_pos': 90, 'type': 'FORM', 'value': 'Powder for fever'}, {'end_pos': 187, 'start_pos': 186, 'type': 'FORM', 'value': '.'}, {'end_pos': 243, 'start_pos': 242, 'type': 'FORM', 'value': '.'}, {'end_pos': 367, 'start_pos': 366, 'type': 'FORM', 'value': '.'}, {'end_pos': 397, 'start_pos': 396, 'type': 'FORM', 'value': '.'}, {'end_pos': 539, 'start_pos': 514, 'type': 'FORM', 'value': 'Senior Regulatory Affairs'}]}, {'entity': 'STRENGTH', 'expected_values': [{'end_pos': 48, 'start_pos': 40, 'type': 'STRENGTH', 'value': '500mg/mL'}, {'end_pos': 61, 'start_pos': 53, 'type': 'STRENGTH', 'value': '100mg/mL'}, {'end_pos': 122, 'start_pos': 121, 'type': 'STRENGTH', 'value': '-'}, {'end_pos': 126, 'start_pos': 122, 'type': 'STRENGTH', 'value': '1000'}, {'end_pos': 127, 'start_pos': 126, 'type': 'STRENGTH', 'value': '-'}, {'end_pos': 131, 'start_pos': 127, 'type': 'STRENGTH', 'value': '1000'}]}, {'entity': 'NAME', 'expected_values': [{'end_pos': 122, 'start_pos': 117, 'type': 'NAME', 'value': 'A200-'}, {'end_pos': 501, 'start_pos': 492, 'type': 'NAME', 'value': 'John Cena'}, {'end_pos': 513, 'start_pos': 503, 'type': 'NAME', 'value': 'Ioana Nita'}]}, {'entity': 'ADDRESS', 'expected_values': [{'end_pos': 573, 'start_pos': 522, 'type': 'ADDRESS', 'value': 'Regulatory Affairs Associate Metropolis Center, Str'}]}, {'entity': 'SUBJID', 'expected_values': [{'end_pos': 131, 'start_pos': 117, 'type': 'SUBJID', 'value': 'A200-1000-1000'}]}, {'entity': 'AGE', 'expected_values': [{'end_pos': 390, 'start_pos': 388, 'type': 'AGE', 'value': '25'}]}, {'entity': 'DATE', 'expected_values': [{'end_pos': 366, 'start_pos': 353, 'type': 'DATE', 'value': '2nd June 2022'}]}, {'entity': 'COUNTRY', 'expected_values': [{'end_pos': 632, 'start_pos': 625, 'type': 'COUNTRY', 'value': 'Romania'}]}, {'entity': 'EMAIL', 'expected_values': [{'end_pos': 286, 'start_pos': 266, 'type': 'EMAIL', 'value': 'patient123@email.com'}]}, {'entity': 'HEIGHT', 'expected_values': [{'end_pos': 242, 'start_pos': 236, 'type': 'HEIGHT', 'value': '182 cm'}]}, {'entity': 'MEDICAL HISTORY', 'expected_values': [{'end_pos': 446, 'start_pos': 441, 'type': 'MEDICAL HISTORY', 'value': 'fever'}, {'end_pos': 463, 'start_pos': 451, 'type': 'MEDICAL HISTORY', 'value': 'hypertension'}, {'end_pos': 439, 'start_pos': 435, 'type': 'MEDICAL HISTORY', 'value': 'cold'}, {'end_pos': 508, 'start_pos': 503, 'type': 'MEDICAL HISTORY', 'value': 'Ioana'}, {'end_pos': 531, 'start_pos': 514, 'type': 'MEDICAL HISTORY', 'value': 'Senior Regulatory'}, {'end_pos': 463, 'start_pos': 451, 'type': 'MEDICAL HISTORY', 'value': 'hypertension'}, {'end_pos': 446, 'start_pos': 441, 'type': 'MEDICAL HISTORY', 'value': 'fever'}]}, {'entity': 'PHONE', 'expected_values': [{'end_pos': 325, 'start_pos': 310, 'type': 'PHONE', 'value': ' +91-8876291892'}, {'end_pos': 677, 'start_pos': 660, 'type': 'PHONE', 'value': ' +40 37 26 22 399'}, {'end_pos': 655, 'start_pos': 638, 'type': 'PHONE', 'value': ' +40 31 22 53 000'}, {'end_pos': 325, 'start_pos': 311, 'type': 'PHONE', 'value': '+91-8876291892'}]},
-            {'entity': 'SITEID', 'expected_values': [{'end_pos': 126, 'start_pos': 122, 'type': 'SITEID', 'value': '1000'}, {
-                'end_pos': 131, 'start_pos': 127, 'type': 'SITEID', 'value': '1000'}]},
-            {
-                'entity': 'WEIGHT', 'expected_values': [
-                    {'end_pos': 221, 'start_pos': 216,
-                    'type': 'WEIGHT', 'value': '23 kg'}
-                ]
-            },
-            {
-                "entity": "SUBJID",
-                "expected_values": []
-            }
-        ]
-    if env == "vdi":
-        latest_doc = EntityExtractorV1.objects.order_by("-pk")[0]
-        url = "http://10.185.56.168:8051/entities"
-        resp = req.post(url, json={
-            "input_text": latest_doc.extracted_text,
-            "entity_types": latest_doc.entities
-        })
-        json = resp.json()
-
-    if env == "prod":
-        latest_doc = EntityExtractorV1.objects.order_by("-pk")[0]
-        url = "http://localhost:8051/entities"
-        resp = req.post(url, json={
-            "input_text": latest_doc.extracted_text,
-            "entity_types": latest_doc.entities
-        })
-        json = resp.json()
-
-    return Response({"data": json})
-
-@api_view(["GET"])
-def get_extracted_text(request):
-    latest_doc = EntityExtractorV1.objects.order_by("-pk")[0]
-    return Response(latest_doc.extracted_text)
-
 
 @api_view(["GET", "POST"])
 def upload_page(request):
@@ -65,18 +19,12 @@ def upload_page(request):
     if request.method == "GET":
         return render(request, 'ui_upload.html', context=context)
     if request.method == "POST":
-        EntityExtractorV1.objects.all().delete()
-        files_path = os.path.join(Path(__file__).parent, "static/files")
-        zip_files_path = os.path.join(Path(__file__).parent, "static/all_files")
-        if  os.path.exists(files_path):
-            shutil.rmtree(files_path)
-        if  os.path.exists(zip_files_path):
-            shutil.rmtree(zip_files_path)
         request.POST._mutable = True
         request.POST.update(
             {"entities": ",".join(request.POST.getlist("entities"))})
         files_=request.FILES.getlist('media')
-        operation = request.POST.getlist('operation')[0]
+        entities_list=request.POST.getlist('entities')[-1]
+        action = request.POST.getlist('action')[0]
         context={"page": "preview","response": ''}
         file_details=[]
         for  file in files_:
@@ -90,26 +38,38 @@ def upload_page(request):
                     "updated": form.staticpath,
                     "filename": form.filename
                 })
+                req_id = form.req_id
         context['file_details'] = file_details
-        print(context)
-        if not os.path.exists(files_path):
-            os.makedirs(files_path)
-        if not os.path.exists(zip_files_path):
-            os.makedirs(zip_files_path)
-        make_archive(files_path,zip_files_path+'/'+operation+'.zip')
-        context['download_files']='static/all_files/'+operation+'.zip'
-        context['operation']=operation
-
+        context['download_files']=''
+        context['action']=action
+        page_load_json = {'req_id':req_id,'s3_filepaths':'innovation_test_file11.pdf.enc','action':action,'entities':entities_list}
+        print(req_id)
+        # url = "https://privacyai-dev2.aws.novartis.net/innovation_api"
+        # resp = req.post(url, json=page_load_json, verify=False, headers={'authorization':'privacyai'})
+        url = "https://privacyai-dev2.aws.novartis.net/innovation_api?req_id="+page_load_json['req_id']+'&s3_filepaths='+page_load_json['s3_filepaths']+"&action="+page_load_json['action']+"&entities="+page_load_json['entities']
+        resp = req.get(url, verify=False, headers={'authorization':'privacyai'})
         return render(request, 'ui_review.html', context=context)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
 def review_page(request):
-    latest_doc = EntityExtractorV1.objects.order_by("-pk")[0]
-    context = {
-        "staticpath": latest_doc.staticpath
-    }
+    file_details=[]
+    action =''
+    context ={}
+    get_file_details = pd.DataFrame.from_records(
+            EntityExtractorV1.objects.all().values())
+    if not get_file_details.empty:
+        for id,row in get_file_details.iterrows():
+            file_details.append({
+                    "original": row['staticpath'],
+                    "updated": row['staticpath'],
+                    "filename": row['filename']
+                })
+            action = row['action']
+    context['file_details'] = file_details
+    context['download_files']=''
+    context['action']=action
     return render(request, 'ui_review.html', context=context)
 
 
@@ -121,3 +81,27 @@ def make_archive(source, destination):
         archive_to = os.path.basename(source.strip(os.sep))
         shutil.make_archive(name, format, archive_from, archive_to)
         shutil.move('%s.%s'%(name,format), destination)
+
+
+def check_modal_status(req_id):
+    context ={}
+    res=req.get('https://privacyai-dev2.aws.novartis.net/innovation_api_status?req_id='+req_id, headers={'authorization':'privacyai'},verify=False)
+    if res.status_code == 200:
+        resp_json = res.json()
+        context['msg'] = resp_json['status']
+        if context['msg'] == 'Done':
+            context['output'] = resp_json['output']
+    else:
+        context['msg'] = 'err'
+    print(context)
+    return JsonResponse(context)
+
+def upload_files_to_s3(file_list,req_id):
+    print('upload_files_to_s3')
+    # for file_ in file_list:
+    #     uploaded_file = file_
+    #     encrypted_file = '{}.enc'.format(uploaded_file)
+    #     s3_encrypted_file = '{}/{}.enc'.format(req_id,'innovation_test_file.pdf')
+    #     encryption_obj.encrypt_file(uploaded_file)
+    #     sync_file_to_s3(encrypted_file, s3_encrypted_file)
+
