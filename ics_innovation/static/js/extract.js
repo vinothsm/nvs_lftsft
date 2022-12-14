@@ -60,6 +60,7 @@ $("body")
     }
       else{
           $('#alert_limit').modal('show')
+          $('.alert-popup-body').text('You can only select 5 Entities')
       }
     }
   })
@@ -76,6 +77,22 @@ $("body")
       ).removeClass("selected");
 
       update_selected_entites();
+    }
+  })
+  .on("click", "#submit_btn", function (e) {
+    var text_msg=''
+    let file_val=$('input[name=media]').val()
+    if(file_val==''){
+      text_msg='Please select a File'
+    }
+    else if(selected_entity_list.length == 0){
+      text_msg='Please select atleast 1 Entity'
+    }
+    if(text_msg !=''){ 
+      $('#alert_limit').modal('show')
+      $('.alert-popup-body').text(text_msg)}
+    else{
+      $('#submit_form_btn').click()
     }
   });
 
