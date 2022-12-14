@@ -83,7 +83,7 @@ $("body")
     var text_msg=''
     let file_val=$('input[name=media]').val()
     if(file_val==''){
-      text_msg='Please select a File'
+      text_msg='Please upload a File'
     }
     else if(selected_entity_list.length == 0){
       text_msg='Please select atleast 1 Entity'
